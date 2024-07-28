@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const mongodb = require('mongodb');
@@ -22,7 +23,7 @@ app.use(session({
   cookie: { secure: false } // Set to true if using https
 }));
 
-client.connect('mongodb://localhost:27017/')
+client.connect(process.env.mongourl)
   .then((database) => {
     console.log('Connected to MongoDB');
     dbinstance = database.db('sectionE');
@@ -105,7 +106,7 @@ app.get('/logout', (req, res) => {
   });
 });
 
-app.listen(3000, (err) => {
+app.listen(9999, (err) => {
   if (err) console.log(err);
   else console.log('Server running on port 3000');
 });
