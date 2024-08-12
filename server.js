@@ -230,23 +230,33 @@ app.post('/signup', (req, res) => {
     if (data.length > 0) {
       res.render('signup', { message: 'Email already exists' });
     } else {
-      dbinstance.collection('customer').insertOne({ email: email, username: username, pass: pass, role: 'customer' }).then(data => {
-        const otp = generateOTP();
-        dbinstance.collection('otps').insertOne({ email: email, otp: otp, timestamp: new Date() }).then(() => {
-          const mailOptions = {
-            from: process.env.EMAIL_USER,
-            to: email,
-            subject: 'Your OTP Code',
-            text: `Your OTP code is ${otp}`
-          };
+      const otp = generateOTP();
+      
+      // Delete any existing OTP entries for this email
+      dbinstance.collection('otps').deleteMany({ email: email }).then(() => {
+        dbinstance.collection('customer').insertOne({ email: email, username: username, pass: pass, role: 'customer' }).then(() => {
+          
+          // Insert new OTP after deleting old ones
+          dbinstance.collection('otps').insertOne({ email: email, otp: otp, timestamp: new Date() }).then(() => {
+            const mailOptions = {
+              from: process.env.EMAIL_USER,
+              to: email,
+              subject: 'Your OTP Code',
+              text: `Your OTP code is ${otp}`
+            };
 
-          transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-              console.error('Error sending email: ', error);
-              return res.status(500).send('Error sending email');
-            }
-            res.redirect(`/verify-otp?email=${encodeURIComponent(email)}`);
+            transporter.sendMail(mailOptions, (error, info) => {
+              if (error) {
+                console.error('Error sending email: ', error);
+                return res.status(500).send('Error sending email');
+              }
+              res.redirect(`/verify-otp?email=${encodeURIComponent(email)}`);
+            });
+          }).catch(dbErr => {
+            console.error('Database error: ', dbErr);
+            res.status(500).send('Database error');
           });
+
         }).catch(dbErr => {
           console.error('Database error: ', dbErr);
           res.status(500).send('Database error');
@@ -258,6 +268,7 @@ app.post('/signup', (req, res) => {
     res.status(500).send('Database error');
   });
 });
+
 
 app.post('/login', (req, res) => {
   let { username, pass } = req.body;
