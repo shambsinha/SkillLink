@@ -13,6 +13,7 @@ const crypto = require('crypto');
 const bookingRoutes = require('./routes/booking.js');
 // Middleware for serving static files
 app.use(express.static('public'));
+app.use('/image',express.static('image'));
 
 app.use('/booking',bookingRoutes);
 

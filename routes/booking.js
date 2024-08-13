@@ -9,9 +9,6 @@ router.get('/electrician', (req,res)=>{
 });
 
 
-
-
-
 router.get('/',(req,res)=>{
     res.send('some');
 })

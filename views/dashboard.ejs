@@ -12,7 +12,8 @@
             <h1>Skill~Link</h1>
             <nav>
                 <ul>
-                    <li><a href="/login">Login</a></li>
+                    <li id="user-profile"><a href="/profile"><%= user.username %></a></li>
+                    <li><a href="/login">Login </a></li>
                     <li><a href="/signup">Signup</a></li>
                     <li><a href="/logout">Logout</a></li>
                 </ul>
@@ -42,17 +43,17 @@
                 <h2>Services</h2>
                 <div class="cards">
                     <div id="book-electrician" class="card">
-                        <img src="image/Electrician.jpg" alt="Electrical Service">
+                        <img class="workimg" src="image/Electrician.jpg" alt="Electrical Service">
                         <h3>Electrical</h3>
                         <p>Description of service 1.</p>
                     </div>
                     <div class="card">
-                        <img src="image/painter.jpg" alt="Painting Service">
+                        <img class="workimg" src="image/painter.jpg" alt="Painting Service">
                         <h3>Painting</h3>
                         <p>Description of service 2.</p>
                     </div>
                     <div class="card">
-                        <img src="image/plumber.jpg" alt="Plumbing Service">
+                        <img class="workimg" src="image/plumber.jpg" alt="Plumbing Service">
                         <h3>Plumbing</h3>
                         <p>Description of service 3.</p>
                     </div>
