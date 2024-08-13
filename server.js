@@ -207,13 +207,20 @@ const session = require('express-session');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 
+
+const bookingRoutes = require('./routes/booking.js');
+// Middleware for serving static files
+app.use(express.static('public'));
+
+app.use('/booking',bookingRoutes);
+
+
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: false }));
 
 let dbinstance;
 
-// Middleware for serving static files
-app.use(express.static('public'));
+
 
 // Middleware for sessions
 app.use(session({
