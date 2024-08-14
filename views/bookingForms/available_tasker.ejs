@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<h2>List of Tasker in your area</h2>
+<%data.forEach(e=>{%>
+    <div>
+        <p><%=e.username%></p>
+        <p><%=e.address%></p>
+        <p><%=e.zip%></p>
+        <p><%=e.phone%></p>
+        <p><%=e.email%></p>
+        <p><%=e.rating%></p>
+        <p><%=e.fees%></p>
+        <br>
+    </div>
+<%})%>
+   
+
+</body>
+</html>
