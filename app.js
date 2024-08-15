@@ -15,6 +15,7 @@ const bookingRoutes = require('./routes/booking');
 
 // Middleware for serving static files
 app.use(express.static('public'));
+app.use(express.static('routes'));
 app.use('/image', express.static('image'));
 
 app.set('view engine', 'ejs');

@@ -12,6 +12,7 @@ header {
     background-color: #000000;
     color: white;
     padding: 15px 0;
+    
 }
 
 header .container {
@@ -56,7 +57,7 @@ aside {
     background-color: #343a40;
     color: white;
     position: fixed;
-    top: 60px; /* Adjusted for header height */
+    top: 0px; /* Adjusted for header height */
     bottom: 0;
     padding: 30px 20px;
     overflow-y: auto;
@@ -87,9 +88,9 @@ aside nav ul li a:hover {
 /* Toggle Sidebar Button */
 #toggle-sidebar {
     position: fixed;
-    top: 70px;
-    left: 10px;
-    background-color: #007bff;
+    top: 8px;
+    left: 0px;
+    background-color: #000000;
     color: white;
     border: none;
     border-radius: 4px;
@@ -105,7 +106,8 @@ aside.hidden {
 
 /* Main Content Styles */
 main {
-    margin-left: 270px; /* Adjusted for sidebar width */
+   /* margin-left: 270px; /* Adjusted for sidebar width */
+   margin: 0 auto;
     padding: 30px;
     transition: margin-left 0.3s ease;
 }
