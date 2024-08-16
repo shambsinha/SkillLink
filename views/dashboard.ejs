@@ -7,13 +7,16 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    
     <header>
         <div class="container">
             <div id="toggle-sidebar">
                 <!-- Initially show a button to toggle the sidebar -->
                 <span>☰</span>
             </div>
-            <h1>Skill~Link</h1>
+            <a href="/dashboard">
+                <h1>Skill~Link</h1>
+            </a>
             <nav>
                 <ul>
                     <li id="user-profile"><a href="/profile"><%= user.username %></a></li>
@@ -38,7 +41,7 @@
             </ul>
         </nav>
     </aside>
-    <main>
+    <main id="main-div">
         <div class="container">
             <section class="welcome">
                 <h2>Welcome, <%= user.username %></h2>
@@ -91,6 +94,8 @@
     <script>
     const sidebar = document.getElementById('sidebar');
     const toggleSidebar = document.getElementById('toggle-sidebar');
+    const mainDiv = document.getElementById("main-div");
+
     toggleSidebar.addEventListener('click', function() {
     // Toggle sidebar visibility
 
@@ -98,9 +103,12 @@
     if(toggleSidebar.innerText=='☰'){
         toggleSidebar.innerText='X';
         toggleSidebar.style.left="15rem";
+        mainDiv.style.marginLeft ="16.875rem";
     }
     else {toggleSidebar.innerText="☰";
-     toggleSidebar.style.left="10px";}
+     toggleSidebar.style.left="10px";
+     mainDiv.style.marginLeft ="0";
+    }
 });
         const e_button = document.getElementById("book-electrician");
     </script>
