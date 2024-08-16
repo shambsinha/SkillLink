@@ -18,6 +18,7 @@ const dashboardRoutes = require('./routes/dashboard');
 const otpRoutes = require('./routes/otp');
 const bookingRoutes = require('./routes/booking');
 const taskerRoute = require('./routes/tasker');
+const profileRoute = require('./routes/profile');
 const { error } = require('console');
 
 // Middleware for serving static files
@@ -73,6 +74,7 @@ app.use('/dashboard', dashboardRoutes);
 app.use('/otp', otpRoutes);
 app.use('/booking', bookingRoutes);
 app.use('/tasker',taskerRoute);
+app.use('/profile',profileRoute);
 
 
 
