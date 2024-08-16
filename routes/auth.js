@@ -31,10 +31,10 @@ router.get('/login', checkLoggedIn, (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;  // Use email instead of username
   const db = req.app.locals.db;
 
-  db.collection('customer').findOne({ username })
+  db.collection('customer').findOne({ email })  // Query the database with the email
     .then(user => {
       if (user && user.pass === password) {
         req.session.user = user;
