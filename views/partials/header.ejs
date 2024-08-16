@@ -1,0 +1,46 @@
+<header>
+    <div class="container">
+        <div id="toggle-sidebar">
+            <!-- Initially show a button to toggle the sidebar -->
+            <span>☰</span>
+        </div>
+        <a href="/dashboard">
+            <h1>Skill~Link</h1>
+        </a>
+        <nav>
+            <ul>
+                <li id="user-profile"><a href="/profile"><%= user ? user.username : 'Guest' %></a></li>
+                <li>
+                    <a id="tasker-panel" href="<%= user && user.role === 'tasker' ? '/tasker-panel' : '/enroll-tasker' %>">
+                        <%= user && user.role === 'tasker' ? 'Tasker Panel' : 'Become a Tasker' %>
+                    </a> 
+                </li>
+                <li>
+                    <% if (user) { %>
+                      <!-- If the user is logged in, show the Logout option -->
+                      <a href="/logout">Logout</a>
+                    <% } else { %>
+                      <!-- If the user is not logged in, show the Login/SignUp option -->
+                      <a href="/login">Login/SignUp</a>
+                    <% } %>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+<aside id="sidebar">
+    <nav>
+        <ul>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Bookings</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="/logout">Logout</a></li>
+
+            <li><a href="/tasker">Become a Tasker</a></li>
+        </ul>
+    </nav>
+</aside>
