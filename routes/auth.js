@@ -121,8 +121,9 @@ router.post('/signup', (req, res) => {
               console.error('Error sending email: ', error);
               return res.status(500).send('Error sending email');
             }
-            res.redirect(`/otp/verify?email=${encodeURIComponent(email)}`);
+            res.redirect(`/verify-otp?email=${encodeURIComponent(email)}`);
           });
+          
         }).catch(dbErr => {
           console.error('Database error: ', dbErr);
           res.status(500).send('Database error');
