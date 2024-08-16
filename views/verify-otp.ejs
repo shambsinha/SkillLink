@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="verify-otp.css">
 </head>
 <body>
-<<<<<<< HEAD
     <div class="login-container">
         <h1>Verify Your Email</h1>
         <form action="/verify-otp" method="POST">
@@ -20,17 +19,5 @@
         </form>
         <p class="signup-link"><%= message %></p>
     </div>
-=======
-    <%- include('partials/header') %> <!-- Include the header partial -->
-    
-    <h1>Verify Your Email</h1>
-    <form action="/verify-otp" method="POST">
-        <label for="otp">Enter the OTP sent to your email:</label>
-        <input type="text" id="otp" name="otp" required>
-        <input type="hidden" name="email" value="<%= email %>">
-        <button type="submit">Verify</button>
-    </form>
-    <p><%= message %></p>
->>>>>>> c81bd3007b3cc2cca34b198291889cea23e2520c
 </body>
 </html>
