@@ -80,30 +80,31 @@ app.use('/profile',profileRoute);
 
 //booking
 app.get('/submit-booking', (req, res) => {
-  res.send('Booked')
+  res.send('Booked');
 });
 
 // Handle booking form submission
 app.post('/submit-booking', async (req, res) => {
   try {
     console.log(req.body)
-      const { name, address, zip, state, phone, workArea } = req.body;
+      const { name, address, zip, state, phone, workType } = req.body;
+
 
       dbinstance.collection('bookingDetails').insertOne({
         name,
-        workArea,
+        workType,
         address,
-        zip,
+        zip, 
         state,
         phone,
         
       }).then((e)=>{
-        console.log(e);
+        //console.log(e);
       }).catch((e)=>{
         console.log(e);
       })
   
-dbinstance.collection('tasker').find({ zip: zip }).toArray().then(data=>{
+dbinstance.collection('tasker').find({zip, workArea:workType}).toArray().then(data=>{
  
  console.log(data);
  
@@ -112,11 +113,6 @@ dbinstance.collection('tasker').find({ zip: zip }).toArray().then(data=>{
 }).catch((e)=>{
   console.log(e);
 })
-
-
-
-
-
 
   } catch (error) {
       res.status(500).send(error);
