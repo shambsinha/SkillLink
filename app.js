@@ -17,13 +17,14 @@ const authRoutes = require('./routes/auth');
 const dashboardRoutes = require('./routes/dashboard');
 const otpRoutes = require('./routes/otp');
 const bookingRoutes = require('./routes/booking');
-const taskerRoute = require('./routes/tasker');
-const profileRoute = require('./routes/profile');
-const taskerPanelRoute = require('./routes/tasker-panel');
-const { error } = require('console');
+// const taskerRoute = require('./routes/tasker');
+// const profileRoute = require('./routes/profile');
+// const taskerPanelRoute = require('./routes/tasker-panel');
+// const { error } = require('console');
 
 // Middleware for serving static files
 app.use(express.static('public'));
+app.use(express.static('routes'));
 app.use('/image', express.static('image'));
 
 app.set('view engine', 'ejs');
@@ -74,9 +75,9 @@ app.use('/', authRoutes);
 app.use('/dashboard', dashboardRoutes);
 app.use('/otp', otpRoutes);
 app.use('/booking', bookingRoutes);
-app.use('/tasker',taskerRoute);
-app.use('/profile',profileRoute);
-app.use('/tasker-panel',taskerPanelRoute);
+// app.use('/tasker',taskerRoute);
+// app.use('/profile',profileRoute);
+// app.use('/tasker-panel',taskerPanelRoute);
 
 
 
@@ -89,11 +90,11 @@ app.get('/submit-booking', (req, res) => {
 app.post('/submit-booking', async (req, res) => {
   try {
     console.log(req.body)
-      const { name, address, zip, state, phone, workArea } = req.body;
+      const { name, address, zip, state, phone, workType } = req.body;
 
       dbinstance.collection('bookingDetails').insertOne({
         name,
-        workArea,
+        workType,
         address,
         zip,
         state,
@@ -105,7 +106,7 @@ app.post('/submit-booking', async (req, res) => {
         console.log(e);
       })
   
-dbinstance.collection('tasker').find({ zip: zip }).toArray().then(data=>{
+dbinstance.collection('tasker').find({ zip: zip,workArea:workType }).toArray().then(data=>{
  
  console.log(data);
  
