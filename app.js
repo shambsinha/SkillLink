@@ -7,11 +7,19 @@ const session = require('express-session');
 const path = require('path');
 const nodemailer = require('nodemailer');
 
+
+//Import models
+
+// const Booking = require('./models/Booking');
+
 // Import routes
 const authRoutes = require('./routes/auth');
 const dashboardRoutes = require('./routes/dashboard');
 const otpRoutes = require('./routes/otp');
 const bookingRoutes = require('./routes/booking');
+const taskerRoute = require('./routes/tasker');
+const profileRoute = require('./routes/profile');
+const { error } = require('console');
 
 // Middleware for serving static files
 app.use(express.static('public'));
@@ -65,6 +73,59 @@ app.use('/', authRoutes);
 app.use('/dashboard', dashboardRoutes);
 app.use('/otp', otpRoutes);
 app.use('/booking', bookingRoutes);
+app.use('/tasker',taskerRoute);
+app.use('/profile',profileRoute);
+
+
+
+//booking
+app.get('/submit-booking', (req, res) => {
+  res.send('Booked')
+});
+
+// Handle booking form submission
+app.post('/submit-booking', async (req, res) => {
+  try {
+    console.log(req.body)
+      const { name, address, zip, state, phone, workArea } = req.body;
+
+      dbinstance.collection('bookingDetails').insertOne({
+        name,
+        workArea,
+        address,
+        zip,
+        state,
+        phone,
+        
+      }).then((e)=>{
+        console.log(e);
+      }).catch((e)=>{
+        console.log(e);
+      })
+  
+dbinstance.collection('tasker').find({ zip: zip }).toArray().then(data=>{
+ 
+ console.log(data);
+ 
+  res.render('bookingForms/available_tasker',{data:data})
+
+}).catch((e)=>{
+  console.log(e);
+})
+
+
+
+
+
+
+  } catch (error) {
+      res.status(500).send(error);
+  }
+});
+
+
+
+
 
 // Start the server
 app.listen(5050, (err) => {

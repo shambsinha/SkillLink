@@ -7,20 +7,38 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    
     <header>
         <div class="container">
-            <h1>Skill~Link</h1>
+            <div id="toggle-sidebar">
+                <!-- Initially show a button to toggle the sidebar -->
+                <span>☰</span>
+            </div>
+            <a href="/dashboard">
+                <h1>Skill~Link</h1>
+            </a>
             <nav>
                 <ul>
                     <li id="user-profile"><a href="/profile"><%= user.username %></a></li>
-                    <li><a href="/login">Login </a></li>
-                    <li><a href="/signup">Signup</a></li>
-                    <li><a href="/logout">Logout</a></li>
+                    <li>
+                        <a id="tasker-panel" href="<%= user.role === 'tasker' ? '/tasker-panel' : '/enroll-tasker' %>">
+                            <%= user.role === 'tasker' ? 'Tasker Panel' : 'Become a Tasker' %>
+                        </a> 
+                    </li>
+                    <li>
+                        <% if (user) { %>
+                          <!-- If the user is logged in, show the Logout option -->
+                          <li><a href="/logout">Logout</a></li>
+                        <% } else { %>
+                          <!-- If the user is not logged in, show the Login/SignUp option -->
+                          <li id="login-button"><a href="/login">Login/SignUp</a></li>
+                        <% } %>
+                        </li>
                 </ul>
             </nav>
         </div>
     </header>
-    <button id="toggle-sidebar">☰</button>
+    
     <aside id="sidebar">
         <nav>
             <ul>
@@ -30,10 +48,12 @@
                 <li><a href="#">Profile</a></li>
                 <li><a href="#">Settings</a></li>
                 <li><a href="/logout">Logout</a></li>
+
+                <li><a href="/tasker">Become a Tasker</a></li>
             </ul>
         </nav>
     </aside>
-    <main>
+    <main id="main-div">
         <div class="container">
             <section class="welcome">
                 <h2>Welcome, <%= user.username %></h2>
@@ -49,16 +69,24 @@
                             <p>Description of service 1.</p>
                         </div>
                     </a>
-                    <div class="card">
-                        <img class="workimg" src="image/painter.jpg" alt="Painting Service">
-                        <h3>Painting</h3>
-                        <p>Description of service 2.</p>
-                    </div>
-                    <div class="card">
-                        <img class="workimg" src="image/plumber.jpg" alt="Plumbing Service">
-                        <h3>Plumbing</h3>
-                        <p>Description of service 3.</p>
-                    </div>
+
+                    <a href="/booking/painter">
+                        <div class="card">
+                            <img class="workimg" src="image/painter.jpg" alt="Painting Service">
+                            <h3>Painting</h3>
+                            <p>Description of service 2.</p>
+                        </div>
+
+                    </a>
+                    
+                    <a href="/booking/plumber">
+                        <div class="card">
+                            <img class="workimg" src="image/plumber.jpg" alt="Plumbing Service">
+                            <h3>Plumbing</h3>
+                            <p>Description of service 3.</p>
+                        </div>
+                    </a>
+                    
                 </div>
             </section>
             <section class="bookings">
@@ -76,9 +104,24 @@
         </div>
     </main>
     <script>
-        document.getElementById('toggle-sidebar').addEventListener('click', function() {
-            document.getElementById('sidebar').classList.toggle('hidden');
-        });
+    const sidebar = document.getElementById('sidebar');
+    const toggleSidebar = document.getElementById('toggle-sidebar');
+    const mainDiv = document.getElementById("main-div");
+
+    toggleSidebar.addEventListener('click', function() {
+    // Toggle sidebar visibility
+
+    sidebar.classList.toggle('hidden');
+    if(toggleSidebar.innerText=='☰'){
+        toggleSidebar.innerText='X';
+        toggleSidebar.style.left="15rem";
+        mainDiv.style.marginLeft ="16.875rem";
+    }
+    else {toggleSidebar.innerText="☰";
+     toggleSidebar.style.left="10px";
+     mainDiv.style.marginLeft ="0";
+    }
+});
         const e_button = document.getElementById("book-electrician");
     </script>
 </body>
