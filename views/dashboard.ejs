@@ -9,6 +9,10 @@
 <body>
     <header>
         <div class="container">
+            <div id="toggle-sidebar">
+                <!-- Initially show a button to toggle the sidebar -->
+                <span>☰</span>
+            </div>
             <h1>Skill~Link</h1>
             <nav>
                 <ul>
@@ -20,7 +24,7 @@
             </nav>
         </div>
     </header>
-    <button id="toggle-sidebar">☰</button>
+    
     <aside id="sidebar">
         <nav>
             <ul>
@@ -51,16 +55,24 @@
                             <p>Description of service 1.</p>
                         </div>
                     </a>
-                    <div class="card">
-                        <img class="workimg" src="image/painter.jpg" alt="Painting Service">
-                        <h3>Painting</h3>
-                        <p>Description of service 2.</p>
-                    </div>
-                    <div class="card">
-                        <img class="workimg" src="image/plumber.jpg" alt="Plumbing Service">
-                        <h3>Plumbing</h3>
-                        <p>Description of service 3.</p>
-                    </div>
+
+                    <a href="/booking/painter">
+                        <div class="card">
+                            <img class="workimg" src="image/painter.jpg" alt="Painting Service">
+                            <h3>Painting</h3>
+                            <p>Description of service 2.</p>
+                        </div>
+
+                    </a>
+                    
+                    <a href="/booking/plumber">
+                        <div class="card">
+                            <img class="workimg" src="image/plumber.jpg" alt="Plumbing Service">
+                            <h3>Plumbing</h3>
+                            <p>Description of service 3.</p>
+                        </div>
+                    </a>
+                    
                 </div>
             </section>
             <section class="bookings">
@@ -78,9 +90,19 @@
         </div>
     </main>
     <script>
-        document.getElementById('toggle-sidebar').addEventListener('click', function() {
-            document.getElementById('sidebar').classList.toggle('hidden');
-        });
+    const sidebar = document.getElementById('sidebar');
+    const toggleSidebar = document.getElementById('toggle-sidebar');
+    toggleSidebar.addEventListener('click', function() {
+    // Toggle sidebar visibility
+
+    sidebar.classList.toggle('hidden');
+    if(toggleSidebar.innerText=='☰'){
+        toggleSidebar.innerText='X';
+        toggleSidebar.style.left="15rem";
+    }
+    else {toggleSidebar.innerText="☰";
+     toggleSidebar.style.left="10px";}
+});
         const e_button = document.getElementById("book-electrician");
     </script>
 </body>

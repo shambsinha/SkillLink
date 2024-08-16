@@ -11,13 +11,13 @@ Router.get('/',(req,res)=>{
 Router.post('/submit-tasker', async (req, res) => {
     try {
       console.log(req.body)
-        const { username, address, phone, email, fees, zip } = req.body;
+        const { username, workArea, address, phone, email, fees, zip } = req.body;
         const dbinstance = req.app.locals.db;
 
         dbinstance.collection('tasker').insertOne({
             username, 
+            workArea,
             address, 
-            rating,
             phone, 
             email, 
             fees, 

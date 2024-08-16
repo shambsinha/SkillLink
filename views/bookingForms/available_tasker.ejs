@@ -3,23 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Tasker List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .tasker-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .tasker-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .tasker-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .tasker-card p {
+            margin: 10px 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .tasker-card p:first-child {
+            font-weight: bold;
+            font-size: 18px;
+            color: #000;
+        }
+
+        .tasker-card .rating {
+            font-weight: bold;
+            color: #FFD700;
+        }
+
+        .tasker-card .fees {
+            font-weight: bold;
+            font-size: 16px;
+            color: #28a745;
+        }
+
+        .tasker-card .contact {
+            font-size: 14px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .tasker-card .contact:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .tasker-card {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-<h2>List of Tasker in your area</h2>
-<%data.forEach(e=>{%>
-    <div>
-        <p><%=e.username%></p>
-        <p><%=e.address%></p>
-        <p><%=e.zip%></p>
-        <p><%=e.phone%></p>
-        <p><%=e.email%></p>
-        <p><%=e.rating%></p>
-        <p><%=e.fees%></p>
-        <br>
+
+<h2>List of Taskers in Your Area</h2>
+
+<div class="tasker-container">
+    <% data.forEach(e => { %>
+    <div class="tasker-card">
+        <p><%= e.username %></p>
+        <p><%= e.workArea %></p>
+        <p><%= e.address %>, <%= e.zip %></p>
+        <p class="contact">Phone: <%= e.phone %></p>
+        <p class="contact">Email: <%= e.email %></p>
+        <p class="rating">Rating: <%= e.rating %> ★</p>
+        <p class="fees">Fees: ₹<%= e.fees %></p>
     </div>
-<%})%>
-   
+    <% }) %>
+</div>
 
 </body>
 </html>

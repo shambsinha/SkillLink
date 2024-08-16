@@ -5,12 +5,20 @@ const path = require('path');
 
 
 router.get('/electrician', (req,res)=>{
-    res.render('bookingForms/electrician');
+    res.render('bookingForms/booking-form');
+});
+
+router.get('/plumber', (req,res)=>{
+    res.render('bookingForms/booking-form');
+});
+
+router.get('/painter', (req,res)=>{
+    res.render('bookingForms/booking-form');
 });
 
 
 router.get('/',(req,res)=>{
-    res.send('some');
+    res.send('dashboard');
 })
 
 
