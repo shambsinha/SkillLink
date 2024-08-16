@@ -10,10 +10,12 @@ function checkLoggedIn(req, res, next) {
     next();
   }
 }
+
 // Generate OTP
 function generateOTP(length = 6) {
   return crypto.randomBytes(length).toString('hex').substring(0, length).toUpperCase();
 }
+
 // Root route ("/")
 router.get('/', (req, res) => {
   if (req.session.user) {
@@ -27,39 +29,6 @@ router.get('/', (req, res) => {
 router.get('/login', checkLoggedIn, (req, res) => {
   res.render('login', { message: '' });
 });
-
-// router.post('/login', (req, res) => {
-//   const { username, password } = req.body;
-//   const db = req.app.locals.db;
-
-//   if (req.session.user) {
-//     res.send(`
-//       <script>
-//         alert('Already logged in');
-//         window.location.href = '/dashboard';
-//       </script>
-//     `);
-//   } else {
-//     db.collection('customer').findOne({ username })
-//       .then(user => {
-//         if (user && user.pass === password) {
-//           req.session.user = user;
-//           res.redirect('/dashboard');
-//         } else {
-//           res.send(`
-//             <script>
-//               alert('Wrong credentials');
-//               window.location.href = '/login';
-//             </script>
-//           `);
-//         }
-//       })
-//       .catch(dbErr => {
-//         console.error('Database error: ', dbErr);
-//         res.status(500).send('Database error');
-//       });
-//   }
-// });
 
 router.post('/login', (req, res) => {
   const { username, password } = req.body;
@@ -95,51 +64,37 @@ router.post('/signup', (req, res) => {
   const db = req.app.locals.db;
   const transporter = req.app.locals.transporter;
 
-  db.collection('customer').findOne({ email }).then(existingUser => {
-    if (existingUser) {
-      return res.render('signup', { message: 'Email already exists' });
-    }
-
+  db.collection('otps').deleteMany({ email }).then(() => {
     const otp = generateOTP();
 
-    // Remove any existing OTPs for the email
-    db.collection('otps').deleteMany({ email }).then(() => {
-      // Insert the new user
-      db.collection('customer').insertOne({ email, username, pass: password, role: 'customer' }).then(() => {
-        // Insert OTP for verification
-        db.collection('otps').insertOne({ email, otp, timestamp: new Date() }).then(() => {
-          // Send OTP email
-          const mailOptions = {
-            from: process.env.EMAIL_USER,
-            to: email,
-            subject: 'Your OTP Code',
-            text: `Your OTP code is ${otp}`
-          };
+    // Store user details temporarily
+    db.collection('pending_users').insertOne({ email, username, password, otp }).then(() => {
+      
+      // Send OTP email
+      const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: email,
+        subject: 'Your OTP Code',
+        text: `Your OTP code is ${otp}`
+      };
 
-          transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-              console.error('Error sending email: ', error);
-              return res.status(500).send('Error sending email');
-            }
-            res.redirect(`/verify-otp?email=${encodeURIComponent(email)}`);
-          });
-          
-        }).catch(dbErr => {
-          console.error('Database error: ', dbErr);
-          res.status(500).send('Database error');
-        });
-      }).catch(dbErr => {
-        console.error('Database error: ', dbErr);
-        res.status(500).send('Database error');
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.error('Error sending email: ', error);
+          return res.status(500).send('Error sending email');
+        }
+        res.redirect(`/verify-otp?email=${encodeURIComponent(email)}`);
       });
+
+    }).catch(dbErr => {
+      console.error('Database error: ', dbErr);
+      res.status(500).send('Database error');
     });
   }).catch(dbErr => {
     console.error('Database error: ', dbErr);
     res.status(500).send('Database error');
   });
 });
-
-
 
 // OTP verification route
 router.get('/verify-otp', (req, res) => {
@@ -149,13 +104,25 @@ router.get('/verify-otp', (req, res) => {
 
 router.post('/verify-otp', (req, res) => {
   const { email, otp } = req.body;
-  const dbinstance = req.app.locals.db;
+  const db = req.app.locals.db;
 
-  dbinstance.collection('otps').findOne({ email }).then(data => {
+  db.collection('pending_users').findOne({ email }).then(data => {
     if (data && data.otp === otp) {
-      dbinstance.collection('otps').deleteOne({ email });
-      req.session.user = { email };
-      res.redirect('/dashboard');
+      // Move user from pending_users to customer collection
+      db.collection('customer').insertOne({
+        email: data.email,
+        username: data.username,
+        pass: data.password,
+        role: 'customer'
+      }).then(() => {
+        db.collection('pending_users').deleteOne({ email });
+        req.session.user = { email: data.email };
+        res.redirect('/dashboard');
+      }).catch(dbErr => {
+        console.error('Database error: ', dbErr);
+        res.status(500).send('Database error');
+      });
+
     } else {
       res.render('verify-otp', { email, message: 'Invalid OTP' });
     }
