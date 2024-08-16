@@ -5,17 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile Page</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+       .main-container{
+        margin: 0 auto;
+       }
 
-        .container {
+        .main-container {
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
@@ -79,7 +73,8 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <%- include('partials/header') %> <!-- Include the header partial -->
+    <div class="main-container">
         <h2>User Profile</h2>
 
         <form action="/profile" method="POST">
