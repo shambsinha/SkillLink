@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    
+    <header>
+        <div class="container">
+            <div id="toggle-sidebar">
+                <!-- Initially show a button to toggle the sidebar -->
+                <span>☰</span>
+            </div>
+            <a href="/dashboard">
+                <h1>Skill~Link</h1>
+            </a>
+            <nav>
+                <ul>
+                    <li id="user-profile"><a href="/profile"><%= user.username %></a></li>
+                    <li>
+                        <a id="tasker-panel" href="<%= user.role === 'tasker' ? '/tasker-panel' : '/enroll-tasker' %>">
+                            <%= user.role === 'tasker' ? 'Tasker Panel' : 'Become a Tasker' %>
+                        </a> 
+                    </li>
+                    <li>
+                        <% if (user) { %>
+                          <!-- If the user is logged in, show the Logout option -->
+                          <li><a href="/logout">Logout</a></li>
+                        <% } else { %>
+                          <!-- If the user is not logged in, show the Login/SignUp option -->
+                          <li id="login-button"><a href="/login">Login/SignUp</a></li>
+                        <% } %>
+                        </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <aside id="sidebar">
+        <nav>
+            <ul>
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Bookings</a></li>
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="/logout">Logout</a></li>
+
+                <li><a href="/tasker">Become a Tasker</a></li>
+            </ul>
+        </nav>
+    </aside>
+    <main id="main-div">
+        <div class="container">
+            <section class="welcome">
+                <h2>Welcome, <%= user.username %></h2>
+                <p>Here you can manage your services, view bookings, update your profile, and more.</p>
+            </section>
+            <section class="services">
+                <h2>Services</h2>
+                <div class="cards">
+                    <a href="/booking/electrician">
+                        <div id="book-electrician" class="card">
+                            <img class="workimg" src="image/Electrician.jpg" alt="Electrical Service">
+                            <h3>Electrical</h3>
+                            <p>Description of service 1.</p>
+                        </div>
+                    </a>
+
+                    <a href="/booking/painter">
+                        <div class="card">
+                            <img class="workimg" src="image/painter.jpg" alt="Painting Service">
+                            <h3>Painting</h3>
+                            <p>Description of service 2.</p>
+                        </div>
+
+                    </a>
+                    
+                    <a href="/booking/plumber">
+                        <div class="card">
+                            <img class="workimg" src="image/plumber.jpg" alt="Plumbing Service">
+                            <h3>Plumbing</h3>
+                            <p>Description of service 3.</p>
+                        </div>
+                    </a>
+                    
+                </div>
+            </section>
+            <section class="bookings">
+                <h2>Bookings</h2>
+                <p>View and manage your bookings.</p>
+            </section>
+            <section class="profile">
+                <h2>Profile</h2>
+                <p>Update your personal information.</p>
+            </section>
+            <section class="settings">
+                <h2>Settings</h2>
+                <p>Configure your account settings.</p>
+            </section>
+        </div>
+    </main>
+    <script>
+    const sidebar = document.getElementById('sidebar');
+    const toggleSidebar = document.getElementById('toggle-sidebar');
+    const mainDiv = document.getElementById("main-div");
+
+    toggleSidebar.addEventListener('click', function() {
+    // Toggle sidebar visibility
+
+    sidebar.classList.toggle('hidden');
+    if(toggleSidebar.innerText=='☰'){
+        toggleSidebar.innerText='X';
+        toggleSidebar.style.left="15rem";
+        mainDiv.style.marginLeft ="16.875rem";
+    }
+    else {toggleSidebar.innerText="☰";
+     toggleSidebar.style.left="10px";
+     mainDiv.style.marginLeft ="0";
+    }
+});
+        const e_button = document.getElementById("book-electrician");
+    </script>
+</body>
+</html>
