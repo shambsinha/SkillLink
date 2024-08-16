@@ -7,11 +7,6 @@ const session = require('express-session');
 const path = require('path');
 const nodemailer = require('nodemailer');
 
-
-//Import models
-
-// const Booking = require('./models/Booking');
-
 // Import routes
 const authRoutes = require('./routes/auth');
 const dashboardRoutes = require('./routes/dashboard');
@@ -38,6 +33,12 @@ app.use(session({
   saveUninitialized: true,
   cookie: { secure: false } 
 }));
+
+// Middleware to attach user to res.locals
+app.use((req, res, next) => {
+  res.locals.user = req.session.user || null;
+  next();
+});
 
 // Connect to MongoDB
 client.connect(process.env.mongourl)
@@ -74,13 +75,11 @@ app.use('/', authRoutes);
 app.use('/dashboard', dashboardRoutes);
 app.use('/otp', otpRoutes);
 app.use('/booking', bookingRoutes);
-app.use('/tasker',taskerRoute);
-app.use('/profile',profileRoute);
-app.use('/tasker-panel',taskerPanelRoute);
+app.use('/tasker', taskerRoute);
+app.use('/profile', profileRoute);
+app.use('/tasker-panel', taskerPanelRoute);
 
-
-
-//booking
+// Booking
 app.get('/submit-booking', (req, res) => {
   res.send('Booked')
 });
@@ -89,45 +88,23 @@ app.get('/submit-booking', (req, res) => {
 app.post('/submit-booking', async (req, res) => {
   try {
     console.log(req.body)
-      const { name, address, zip, state, phone, workArea } = req.body;
+    const { name, address, zip, state, phone, workArea } = req.body;
 
-      dbinstance.collection('bookingDetails').insertOne({
-        name,
-        workArea,
-        address,
-        zip,
-        state,
-        phone,
-        
-      }).then((e)=>{
-        console.log(e);
-      }).catch((e)=>{
-        console.log(e);
-      })
-  
-dbinstance.collection('tasker').find({ zip: zip }).toArray().then(data=>{
- 
- console.log(data);
- 
-  res.render('bookingForms/available_tasker',{data:data})
+    await dbinstance.collection('bookingDetails').insertOne({
+      name,
+      workArea,
+      address,
+      zip,
+      state,
+      phone
+    });
 
-}).catch((e)=>{
-  console.log(e);
-})
-
-
-
-
-
-
+    const data = await dbinstance.collection('tasker').find({ zip: zip }).toArray();
+    res.render('bookingForms/available_tasker', { data: data });
   } catch (error) {
-      res.status(500).send(error);
+    res.status(500).send(error);
   }
 });
-
-
-
-
 
 // Start the server
 app.listen(5050, (err) => {

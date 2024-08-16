@@ -1,46 +1,317 @@
-<header>
-    <div class="container">
-        <div id="toggle-sidebar">
-            <!-- Initially show a button to toggle the sidebar -->
-            <span>☰</span>
+
+<head>
+    <style>
+        /* General Styles */
+        body {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #000000;
+    color: #343a40;
+
+    /* Use background properties directly on the body */
+    background-image: url('/image/back.jpg');
+    background-size: cover;
+    background-repeat: repeat-y; /* Repeat vertically */
+    background-position: top center; /* Align the background to the top center */
+}
+
+body::before {
+    content: "";
+    position: fixed; /* Change to fixed to keep the background fixed while scrolling */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: inherit; /* Inherit the background properties from the body */
+    opacity: 0.7; /* Adjust this value to control the dimming effect */
+    z-index: -1; /* Ensure the pseudo-element is behind the content */
+}
+
+.content {
+    position: relative;
+    z-index: 1; /* Ensure content is above the background */
+}
+
+/* Header Styles */
+header {
+    background-color: #000000;
+    border-bottom: 1px solid white;
+    color: white;
+    padding: 15px 0;
+    position: fixed; /* Fixes the header to the top of the page */
+    top: 0; /* Aligns the header to the top */
+    width: 100%; /* Ensures the header takes up the full width of the viewport */
+    z-index: 1000; /* Keeps the header on top of other elements */
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+}
+
+header h1 {
+    color: white;
+    margin: 0;
+    margin-left: 2rem;
+    font-size: 24px;
+}
+
+header nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+}
+
+header nav ul li {
+    display: inline;
+}
+
+header nav ul li a {
+    background-color: black;
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 2rem;
+    border: 1px solid white;
+    transition: background-color 0.3s ease;
+}
+
+header nav ul li a:hover {
+    background-color: #616060;
+}
+
+#tasker-panel{
+    color: black;
+    background-color: white;
+
+}
+#tasker-panel:hover{
+    color: white;
+    background-color: #616060;    
+}
+/* To ensure content doesn't hide behind the fixed header */
+body {
+    padding-top: 70px; /* Adjust this value based on your header height */
+}
+
+/* Sidebar Styles */
+aside {
+    width: 250px;
+    background-color: #343a40;
+    color: white;
+    position: fixed;
+    top: 0; /* Adjusted for header height */
+    bottom:0;
+    left: 0;
+    padding: 30px 20px;
+    overflow-y: auto;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+
+
+aside nav ul {
+    list-style: none;
+    margin-top: 3.5rem;
+    padding: 0;
+}
+
+aside nav ul li {
+    margin: 20px 0;
+}
+
+aside nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+aside nav ul li a:hover {
+    color:cyan;
+}
+
+/* Toggle Sidebar Button */
+#toggle-sidebar {
+    position: fixed;
+    
+    left: 10px;
+    text-align: center;
+    width: 1.5rem;
+    height: 1.6rem;
+    background-color: #818284;
+    font-size: larger;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 7px;
+    cursor: pointer;
+    z-index: 1000;
+    transition: left 0.3s ease;
+}
+
+/* Show Sidebar */
+aside.hidden {
+    transform: translateX(0);
+}
+/* Button Styles */
+button,
+a.button {
+    background-color: #000000;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover,
+a.button:hover {
+    background-color: #333333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    aside {
+        width: 200px;
+    }
+
+    main {
+        margin-left: 220px;
+        padding: 20px;
+    }
+
+    header .container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    header nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+/* Additional Media Queries for Better Responsiveness */
+@media (max-width: 576px) {
+    aside {
+        width: 100%;
+        height: auto;
+        position: relative;
+        top: 0;
+    }
+
+    main {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    header .container {
+        padding: 0 20px;
+    }
+
+    header nav ul {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    header nav ul li a {
+        padding: 8px 12px;
+    }
+
+    .cards {
+        flex-direction: column;
+    }
+
+    .card {
+        flex: 1 1 100%;
+    }
+}
+
+.workimg{
+    width: 10rem;
+    height: auto;
+}
+a{
+    text-decoration: none;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div id="toggle-sidebar">
+                <!-- Initially show a button to toggle the sidebar -->
+                <span>☰</span>
+            </div>
+            <a href="/dashboard">
+                <h1>Skill~Link</h1>
+            </a>
+            <nav>
+                <ul>
+                    <li id="user-profile"><a href="/profile"><%= user ? user.username : 'Guest' %></a></li>
+                    <li>
+                        <a id="tasker-panel" href="<%= user && user.role === 'tasker' ? '/tasker-panel' : '/enroll-tasker' %>">
+                            <%= user && user.role === 'tasker' ? 'Tasker Panel' : 'Become a Tasker' %>
+                        </a> 
+                    </li>
+                    <li>
+                        <% if (user) { %>
+                          <!-- If the user is logged in, show the Logout option -->
+                          <a href="/logout">Logout</a>
+                        <% } else { %>
+                          <!-- If the user is not logged in, show the Login/SignUp option -->
+                          <a href="/login">Login/SignUp</a>
+                        <% } %>
+                    </li>
+                </ul>
+            </nav>
         </div>
-        <a href="/dashboard">
-            <h1>Skill~Link</h1>
-        </a>
+    </header>
+    
+    
+    <aside id="sidebar">
         <nav>
             <ul>
-                <li id="user-profile"><a href="/profile"><%= user ? user.username : 'Guest' %></a></li>
-                <li>
-                    <a id="tasker-panel" href="<%= user && user.role === 'tasker' ? '/tasker-panel' : '/enroll-tasker' %>">
-                        <%= user && user.role === 'tasker' ? 'Tasker Panel' : 'Become a Tasker' %>
-                    </a> 
-                </li>
-                <li>
-                    <% if (user) { %>
-                      <!-- If the user is logged in, show the Logout option -->
-                      <a href="/logout">Logout</a>
-                    <% } else { %>
-                      <!-- If the user is not logged in, show the Login/SignUp option -->
-                      <a href="/login">Login/SignUp</a>
-                    <% } %>
-                </li>
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Bookings</a></li>
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="/logout">Logout</a></li>
+    
+                <li><a href="/tasker">Become a Tasker</a></li>
             </ul>
         </nav>
-    </div>
-</header>
+    </aside>
 
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const toggleSidebar = document.getElementById('toggle-sidebar');
+        
+        
+        toggleSidebar.addEventListener('click', function() {
+        // Toggle sidebar visibility
+    
+        sidebar.classList.toggle('hidden');
+        if(toggleSidebar.innerText=='☰'){
+            toggleSidebar.innerText='╳';
+            toggleSidebar.style.left="15rem";
+        }
+        else {toggleSidebar.innerText="☰";
+         toggleSidebar.style.left="10px";
+        }
+    });
+        </script>
+</body>
 
-<aside id="sidebar">
-    <nav>
-        <ul>
-            <li><a href="/dashboard">Dashboard</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Bookings</a></li>
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Settings</a></li>
-            <li><a href="/logout">Logout</a></li>
-
-            <li><a href="/tasker">Become a Tasker</a></li>
-        </ul>
-    </nav>
-</aside>

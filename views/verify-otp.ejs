@@ -6,6 +6,8 @@
     <title>Verify OTP</title>
 </head>
 <body>
+    <%- include('partials/header') %> <!-- Include the header partial -->
+    
     <h1>Verify Your Email</h1>
     <form action="/verify-otp" method="POST">
         <label for="otp">Enter the OTP sent to your email:</label>
