@@ -7,6 +7,11 @@ router.get('/verify', (req, res) => {
   res.render('verify-otp', { email, message: '' });
 });
 
+
+
+
+
+
 router.post('/verify', (req, res) => {
   const { email, otp } = req.body;
   const db = req.app.locals.db;
