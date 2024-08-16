@@ -3,7 +3,7 @@ const Router = express.Router();
 
 
 Router.get('/',(req,res)=>{
-     res.render('enroll_tasker',{message:''});
+     res.render('enroll_tasker',{message:'',user:req.session.user});
 })
 
 //create=tasker
