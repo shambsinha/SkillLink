@@ -8,51 +8,8 @@
 </head>
 <body>
     
-    <header>
-        <div class="container">
-            <div id="toggle-sidebar">
-                <!-- Initially show a button to toggle the sidebar -->
-                <span>☰</span>
-            </div>
-            <a href="/dashboard">
-                <h1>Skill~Link</h1>
-            </a>
-            <nav>
-                <ul>
-                    <li id="user-profile"><a href="/profile"><%= user.username %></a></li>
-                    <li>
-                        <a id="tasker-panel" href="<%= user.role === 'tasker' ? '/tasker-panel' : '/enroll-tasker' %>">
-                            <%= user.role === 'tasker' ? 'Tasker Panel' : 'Become a Tasker' %>
-                        </a> 
-                    </li>
-                    <li>
-                        <% if (user) { %>
-                          <!-- If the user is logged in, show the Logout option -->
-                          <li><a href="/logout">Logout</a></li>
-                        <% } else { %>
-                          <!-- If the user is not logged in, show the Login/SignUp option -->
-                          <li id="login-button"><a href="/login">Login/SignUp</a></li>
-                        <% } %>
-                        </li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <%- include('partials/header') %> <!-- Include the header partial -->
     
-    <aside id="sidebar">
-        <nav>
-            <ul>
-                <li><a href="/dashboard">Dashboard</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Bookings</a></li>
-                <li><a href="#">Profile</a></li>
-                <li><a href="#">Settings</a></li>
-                <li><a href="/logout">Logout</a></li>
-
-                <li><a href="/tasker">Become a Tasker</a></li>
-            </ul>
-        </nav>
-    </aside>
     <main id="main-div">
         <div class="container">
             <section class="welcome">
@@ -103,25 +60,13 @@
             </section>
         </div>
     </main>
+
     <script>
-    const sidebar = document.getElementById('sidebar');
-    const toggleSidebar = document.getElementById('toggle-sidebar');
-    const mainDiv = document.getElementById("main-div");
+        const mainDiv = document.getElementById("main-div");
+        console.log(mainDiv);
+        
+        </script>
 
-    toggleSidebar.addEventListener('click', function() {
-    // Toggle sidebar visibility
 
-    sidebar.classList.toggle('hidden');
-    if(toggleSidebar.innerText=='☰'){
-        toggleSidebar.innerText='╳';
-        toggleSidebar.style.left="15rem";
-        mainDiv.style.marginLeft ="16.875rem";
-    }
-    else {toggleSidebar.innerText="☰";
-     toggleSidebar.style.left="10px";
-     mainDiv.style.marginLeft ="0";
-    }
-});
-    </script>
 </body>
 </html>
