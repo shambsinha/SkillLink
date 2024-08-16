@@ -80,6 +80,15 @@ header nav ul li a:hover {
     background-color: #616060;
 }
 
+#tasker-panel{
+    color: black;
+    background-color: white;
+
+}
+#tasker-panel:hover{
+    color: white;
+    background-color: #616060;    
+}
 /* To ensure content doesn't hide behind the fixed header */
 body {
     padding-top: 70px; /* Adjust this value based on your header height */

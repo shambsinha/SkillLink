@@ -20,8 +20,20 @@
             <nav>
                 <ul>
                     <li id="user-profile"><a href="/profile"><%= user.username %></a></li>
-                    <li id="login-button"><a href="/login">Login/SignUp </a></li>
-                    <li><a href="/logout">Logout</a></li>
+                    <li>
+                        <a id="tasker-panel" href="<%= user.role === 'tasker' ? '/tasker-panel' : '/enroll-tasker' %>">
+                            <%= user.role === 'tasker' ? 'Tasker Panel' : 'Become a Tasker' %>
+                        </a> 
+                    </li>
+                    <li>
+                        <% if (user) { %>
+                          <!-- If the user is logged in, show the Logout option -->
+                          <li><a href="/logout">Logout</a></li>
+                        <% } else { %>
+                          <!-- If the user is not logged in, show the Login/SignUp option -->
+                          <li id="login-button"><a href="/login">Login/SignUp</a></li>
+                        <% } %>
+                        </li>
                 </ul>
             </nav>
         </div>
