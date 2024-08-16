@@ -128,7 +128,7 @@ aside nav ul li a {
 }
 
 aside nav ul li a:hover {
-    color: #007bff;
+    color:cyan;
 }
 
 /* Toggle Sidebar Button */
