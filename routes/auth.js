@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const crypto = require('crypto');
+const nodemailer = require('nodemailer');
 
 // Middleware to check if user is logged in
 function checkLoggedIn(req, res, next) {
@@ -15,6 +16,24 @@ function checkLoggedIn(req, res, next) {
 function generateOTP(length = 6) {
   return crypto.randomBytes(length).toString('hex').substring(0, length).toUpperCase();
 }
+
+// Configure the transporter
+const transporter = nodemailer.createTransport({
+  service: process.env.EMAIL_SERVICE, // Your email service provider
+  auth: {
+    user: process.env.EMAIL_USER, // Your email address (configured in your environment variables)
+    pass: process.env.EMAIL_PASS // Your email password (configured in your environment variables)
+  }
+});
+
+// Verify Nodemailer configuration
+transporter.verify((error, success) => {
+  if (error) {
+    console.error('Error configuring Nodemailer: ', error);
+  } else {
+    console.log('Nodemailer is ready to send emails');
+  }
+});
 
 // Root route ("/")
 router.get('/', (req, res) => {
@@ -31,10 +50,10 @@ router.get('/login', checkLoggedIn, (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-  const { email, password } = req.body;  // Use email instead of username
+  const { email, password } = req.body; // Use email instead of username
   const db = req.app.locals.db;
 
-  db.collection('customer').findOne({ email })  // Query the database with the email
+  db.collection('customer').findOne({ email }) // Query the database with the email
     .then(user => {
       if (user && user.pass === password) {
         req.session.user = user;
@@ -53,7 +72,6 @@ router.post('/login', (req, res) => {
       res.status(500).send('Database error');
     });
 });
-
 
 // Signup route
 router.get('/signup', checkLoggedIn, (req, res) => {
@@ -76,7 +94,7 @@ router.post('/signup', (req, res) => {
 
         // Store user details temporarily
         db.collection('pending_users').insertOne({ email, username, password, otp }).then(() => {
-          
+
           // Send OTP email
           const mailOptions = {
             from: process.env.EMAIL_USER,
@@ -107,7 +125,6 @@ router.post('/signup', (req, res) => {
     res.status(500).send('Database error');
   });
 });
-
 
 // OTP verification route
 router.get('/verify-otp', (req, res) => {
