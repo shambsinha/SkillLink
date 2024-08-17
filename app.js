@@ -157,28 +157,7 @@ app.post('/submit-booking', async (req, res) => {
 
 
 
-// app.get('/show-bookings', async (req, res) => {
-//   try { 
-//     const userEmail = req.session.user.email;
-//     const userId = req.session.user._id;    
-//     // Ensure userEmail is valid
-//     if (!userEmail) {
-//       return res.status(400).send('User email not found in session');
-//     }
 
-//     // Fetch data from database
-//     const data = await dbinstance.collection('appointments').find({ id: userId }).toArray();
-//    console.log(data);
-   
-//     const adata = await dbinstance.collection('appointments').find({ email: userEmail }).toArray();
-
-//     // Render the view with data
-//     res.render('tasker-panel', { data });
-//   } catch (e) {
-//     console.error('Error fetching data:', e);
-//     res.status(500).send('Error fetching data');
-//   }
-// });
 
 
 
