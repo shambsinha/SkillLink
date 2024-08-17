@@ -12,7 +12,7 @@ const authRoutes = require('./routes/auth');
 const dashboardRoutes = require('./routes/dashboard');
 const otpRoutes = require('./routes/otp');
 const bookingRoutes = require('./routes/booking');
-// const taskerRoute = require('./routes/tasker');
+const taskerRoute = require('./routes/tasker');
 const profileRoute = require('./routes/profile');
 const taskerPanelRoute = require('./routes/tasker-panel');
 // const { error } = require('console');
@@ -76,7 +76,7 @@ app.use('/', authRoutes);
 app.use('/dashboard', dashboardRoutes);
 app.use('/otp', otpRoutes);
 app.use('/booking', bookingRoutes);
-// app.use('/tasker',taskerRoute);
+app.use('/tasker',taskerRoute);
 app.use('/profile',profileRoute);
 app.use('/tasker-panel',taskerPanelRoute);
 

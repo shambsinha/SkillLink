@@ -44,12 +44,14 @@ main section p {
 .cards {
     
     display: flex;
+    justify-content: center;
     gap: 20px;
     flex-wrap: wrap;
 }
 
 .card {
-    
+    width: 16rem;
+    margin: 0.5rem 0.5rem;
     background-color: #ffffff;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
@@ -59,7 +61,6 @@ main section p {
     box-sizing: border-box;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
 .card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -77,5 +78,11 @@ main section p {
     text-align: center;
     font-size: 14px;
     color: #495057;
+}
+
+
+.workimg{
+    width: 10rem;
+    height: auto;
 }
 
