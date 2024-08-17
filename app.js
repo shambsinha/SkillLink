@@ -132,6 +132,32 @@ dbinstance.collection('tasker').find({zip, workArea:workType}).toArray().then(da
   }
 });
 
+
+
+//Appointmetns ka id should be = tasker ka _id for taskerpanel bookings show
+app.get('/show-bookings', async (req, res) => {
+  try { 
+    const userEmail = req.session.user.email;
+    const taskerId = req.session.user._id;
+    console.log(taskerId);
+    
+    // Ensure userEmail is valid
+    if (!userEmail) {
+      return res.status(400).send('User email not found in session');
+    }
+
+    // Fetch data from database
+    const data = await dbinstance.collection('appointments').find({ email: userEmail }).toArray();
+
+    // Render the view with data
+    res.render('bookingForms/show-bookings', { data });
+  } catch (e) {
+    console.error('Error fetching data:', e);
+    res.status(500).send('Error fetching data');
+  }
+});
+
+
 // Start the server
 app.listen(5050, (err) => {
   if (err) console.log(err);

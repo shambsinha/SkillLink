@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* Container styling */
+        .tasker-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px; /* Space between cards */
+            padding: 20px;
+            background-color: #f4f4f4; /* Light grey background */
+        }
+
+        /* Card styling */
+        .tasker-card {
+            background-color: #fff; /* White background for cards */
+            border: 1px solid #ddd; /* Light grey border */
+            border-radius: 8px; /* Rounded corners */
+            padding: 16px;
+            width: calc(33% - 32px); /* Responsive card width with space for gaps */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+            box-sizing: border-box; /* Ensure padding and border are included in width */
+        }
+
+        /* Card text styling */
+        .tasker-card p {
+            margin: 0 0 8px; /* Space between paragraphs */
+            color: #333; /* Dark grey text color */
+        }
+
+        .tasker-card .contact {
+            font-size: 0.9em; /* Slightly smaller font size for contact info */
+            color: #555; /* Medium grey text color */
+        }
+    </style>
+</head>
+<body>
+    <div class="tasker-container">
+        <% data.forEach(e => { %>
+        <div class="tasker-card">
+            <p><%= e.name %></p>
+            <p><%= e.work %></p>
+            <p class="contact">Phone: <%= e.phone %></p>
+            <p class="contact">Email: <%= e.email %></p>
+        </div>
+        <% }) %> 
+    </div>
+</body>
+</html>
