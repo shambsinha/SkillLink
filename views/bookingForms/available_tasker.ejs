@@ -103,9 +103,12 @@
         <p class="contact">Email: <%= e.email %></p>
         <p class="rating">Rating: <%= e.rating %> ★</p>
         <p class="fees">Fees: ₹<%= e.fees %></p>
+        <%=console.log(e._id)%>
+       <a href="/book-appointment/<%=e._id%>"><button>Book Appointment</button></a>
     </div>
-    <% }) %>
+    <% }) %> 
 </div>
+
 
 </body>
 </html>

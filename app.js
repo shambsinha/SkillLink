@@ -78,35 +78,59 @@ app.use('/otp', otpRoutes);
 app.use('/booking', bookingRoutes);
 app.use('/tasker',taskerRoute);
 app.use('/profile',profileRoute);
-app.use('/tasker-panel',taskerPanelRoute);
 
-// Booking
-app.get('/submit-booking', (req, res) => {
-  res.send('Booked')
+//tasker schedule
+app.get('/tasker-schedule/:id', (req, res) => {
+  let id = req.params.id;
+  dbinstance.collection('appointments').find({id}).toArray().then(data=>{
+    console.log(data);
+    res.render('tasker-schedule',{data})
+
+  }).catch(e=>{
+    console.log(e);
+  })
 });
 
+//booking
+app.get('/book-appointment/:id', (req, res) => {
+  //res.send('Booked');
+  let id = req.params.id;
+  console.log(id);
+  res.render('bookingForms/book_appointment',{id:id})
+});
+app.post('/book-appointment', (req,res)=>{
+  const { id, name, address, zip, state, phone,work } = req.body;
+  console.log(req.body)
+  dbinstance.collection('appointments').insertOne({id,name, address, zip, state, phone,work}).then(d=>{
+    console.log(d);
+  }).catch(e=>{
+    console.log(e);
+  })
+
+  res.send("Work Scheduled");
+})
 // Handle booking form submission
 app.post('/submit-booking', async (req, res) => {
   try {
     console.log(req.body)
-
       const { name, address, zip, state, phone, workType } = req.body;
+
 
       dbinstance.collection('bookingDetails').insertOne({
         name,
         workType,
         address,
-        zip,
+        zip, 
         state,
         phone,
         
       }).then((e)=>{
-        console.log(e);
+        //console.log(e);
       }).catch((e)=>{
         console.log(e);
       })
   
-dbinstance.collection('tasker').find({ zip: zip,workArea:workType }).toArray().then(data=>{
+dbinstance.collection('tasker').find({zip, workArea:workType}).toArray().then(data=>{
  
  console.log(data);
  
@@ -115,22 +139,6 @@ dbinstance.collection('tasker').find({ zip: zip,workArea:workType }).toArray().t
 }).catch((e)=>{
   console.log(e);
 })
-
-
-
-
-
-    await dbinstance.collection('bookingDetails').insertOne({
-      name,
-      workArea,
-      address,
-      zip,
-      state,
-      phone
-    });
-
-    const data = await dbinstance.collection('tasker').find({ zip: zip }).toArray();
-    res.render('bookingForms/available_tasker', { data: data });
   } catch (error) {
     res.status(500).send(error);
   }
