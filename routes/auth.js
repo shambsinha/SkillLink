@@ -54,7 +54,7 @@ router.post('/login', (req, res) => {
     });
 });
 
-// Signup route
+
 // Signup route
 router.get('/signup', checkLoggedIn, (req, res) => {
   res.render('signup', { message: '' });
@@ -67,13 +67,8 @@ router.post('/signup', (req, res) => {
   // Check if the user already exists in the customer collection
   db.collection('customer').findOne({ email }).then(existingUser => {
     if (existingUser) {
-      // User already exists, show an alert message
-      res.send(`
-        <script>
-          alert('User already exists');
-          window.location.href = '/signup';
-        </script>
-      `);
+      // User already exists, render the signup page with a message
+      res.render('signup', { message: 'User already exists. Please use a different email.' });
     } else {
       // If user doesn't exist, proceed with OTP generation and signup
       db.collection('otps').deleteMany({ email }).then(() => {
