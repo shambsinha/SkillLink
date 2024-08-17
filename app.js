@@ -78,6 +78,7 @@ app.use('/otp', otpRoutes);
 app.use('/booking', bookingRoutes);
 app.use('/tasker',taskerRoute);
 app.use('/profile',profileRoute);
+app.use('/tasker-panel',taskerPanelRoute);
 
 //tasker schedule
 app.get('/tasker-schedule/:id', (req, res) => {

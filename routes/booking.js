@@ -24,16 +24,3 @@ router.get('/', (req, res) => {
 
 
 module.exports = router;
-
-
-// const express = require('express');
-// const router = express.Router();
-
-// // Example booking route (implement as needed)
-// router.get('/', (req, res) => {
-//   res.send('Booking Home');
-// });
-
-// // Add other booking-related routes here
-
-// module.exports = router;
