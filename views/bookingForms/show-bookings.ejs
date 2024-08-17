@@ -6,16 +6,19 @@
     <title>Document</title>
     <style>
         /* Container styling */
-        .tasker-container {
+        .bookings-container {
             display: flex;
+            justify-content: center;
             flex-wrap: wrap;
             gap: 16px; /* Space between cards */
             padding: 20px;
+            margin: 2rem 10rem;
+            border-radius: 1rem;
             background-color: #f4f4f4; /* Light grey background */
         }
 
         /* Card styling */
-        .tasker-card {
+        .card {
             background-color: #fff; /* White background for cards */
             border: 1px solid #ddd; /* Light grey border */
             border-radius: 8px; /* Rounded corners */
@@ -26,21 +29,22 @@
         }
 
         /* Card text styling */
-        .tasker-card p {
+        .card p {
             margin: 0 0 8px; /* Space between paragraphs */
             color: #333; /* Dark grey text color */
         }
 
-        .tasker-card .contact {
+        .card .contact {
             font-size: 0.9em; /* Slightly smaller font size for contact info */
             color: #555; /* Medium grey text color */
         }
     </style>
 </head>
 <body>
-    <div class="tasker-container">
+    <%- include('../partials/header') %>
+    <div class="bookings-container">
         <% data.forEach(e => { %>
-        <div class="tasker-card">
+        <div class="card">
             <p><%= e.name %></p>
             <p><%= e.work %></p>
             <p class="contact">Phone: <%= e.phone %></p>
