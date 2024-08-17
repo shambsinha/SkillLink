@@ -56,8 +56,7 @@ router.post('/login', (req, res) => {
   db.collection('customer').findOne({ email }) // Query the database with the email
     .then(user => {
       if (user && user.pass === password) {
-        req.session.user = user;
-        res.redirect('/dashboard');
+        res.redirect('/login');
       } else {
         res.send(`
           <script>
