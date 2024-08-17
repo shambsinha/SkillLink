@@ -103,9 +103,9 @@ app.get('/book-appointment/:id', (req, res) => {
 });
 
 app.post('/book-appointment', (req,res)=>{
-  const { id, name, address, zip, state, phone,work } = req.body;
+  const { id, name,email,work, address, zip, state, phone } = req.body;
   console.log(req.body)
-  dbinstance.collection('appointments').insertOne({id,name, address, zip, state, phone,work}).then(d=>{
+  dbinstance.collection('appointments').insertOne({id,name,email, work, address, zip, state, phone}).then(d=>{
     console.log(d);
   }).catch(e=>{
     console.log(e);
