@@ -36,6 +36,17 @@ app.use(session({
   cookie: { secure: false } 
 }));
 
+//Middleware for checking login
+function checkLoggedIn(req, res, next) {
+  if (req.session.user) {
+    res.redirect('/dashboard');
+  } else {
+    next();
+  }
+}
+
+
+
 // Middleware to attach user to res.locals
 app.use((req, res, next) => {
   res.locals.user = req.session.user || null;
@@ -84,17 +95,17 @@ app.use('/tasker-panel',taskerPanelRoute);
 
 
 
-//tasker schedule
-app.get('/tasker-schedule/:id', (req, res) => {
-  let id = req.params.id;
-  dbinstance.collection('appointments').find({id}).toArray().then(data=>{
-    console.log(data);
-    res.render('tasker-schedule',{data})
+// //tasker schedule
+// app.get('/tasker-schedule/:id', (req, res) => {
+//   let id = req.params.id;
+//   dbinstance.collection('appointments').find({id}).toArray().then(data=>{
+//     console.log(data);
+//     res.render('tasker-schedule',{data})
 
-  }).catch(e=>{
-    console.log(e);
-  })
-});
+//   }).catch(e=>{
+//     console.log(e);
+//   })
+// });
 
 //booking
 app.get('/book-appointment/:id', (req, res) => {
@@ -143,28 +154,32 @@ app.post('/submit-booking', async (req, res) => {
 
 
 
-//Appointmetns ka id should be = tasker ka _id for taskerpanel bookings show  
-app.get('/show-bookings', async (req, res) => {
-  try { 
-    const userEmail = req.session.user.email;
-    const taskerId = req.session.user._id;
-    console.log(taskerId);
-    
-    // Ensure userEmail is valid
-    if (!userEmail) {
-      return res.status(400).send('User email not found in session');
-    }
 
-    // Fetch data from database
-    const data = await dbinstance.collection('appointments').find({ email: userEmail }).toArray();
 
-    // Render the view with data
-    res.render('bookingForms/show-bookings', { data });
-  } catch (e) {
-    console.error('Error fetching data:', e);
-    res.status(500).send('Error fetching data');
-  }
-});
+
+// app.get('/show-bookings', async (req, res) => {
+//   try { 
+//     const userEmail = req.session.user.email;
+//     const userId = req.session.user._id;    
+//     // Ensure userEmail is valid
+//     if (!userEmail) {
+//       return res.status(400).send('User email not found in session');
+//     }
+
+//     // Fetch data from database
+//     const data = await dbinstance.collection('appointments').find({ id: userId }).toArray();
+//    console.log(data);
+   
+//     const adata = await dbinstance.collection('appointments').find({ email: userEmail }).toArray();
+
+//     // Render the view with data
+//     res.render('tasker-panel', { data });
+//   } catch (e) {
+//     console.error('Error fetching data:', e);
+//     res.status(500).send('Error fetching data');
+//   }
+// });
+
 
 
 // Start the server

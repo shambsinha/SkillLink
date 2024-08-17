@@ -3,11 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Tasker Panel</title>
+    <style>
+        /* Container to hold all tasker cards */
+        .tasker-container {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          padding: 20px;
+          gap: 20px;
+        }
+      
+        /* Individual tasker card styling */
+        .tasker-card {
+          background-color: #fff; /* White background for the card */
+          border: 1px solid #ddd; /* Light border for the card */
+          border-radius: 10px; /* Rounded corners */
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+          padding: 15px;
+          width: 300px; /* Fixed width for consistency */
+          transition: transform 0.2s ease-in-out; /* Smooth hover effect */
+        }
+      
+        /* Hover effect on cards */
+        .tasker-card:hover {
+          transform: scale(1.05); /* Slight zoom on hover */
+        }
+      
+        /* Styling for text within the card */
+        .tasker-card p {
+          margin: 8px 0; /* Space between lines */
+          font-size: 16px; /* Base font size */
+          color: #333; /* Dark text color */
+        }
+      
+        /* Styling for contact information */
+        .tasker-card .contact {
+          font-weight: bold; /* Bold font for emphasis */
+          color: #555; /* Slightly lighter color for contacts */
+        }
+      
+        /* Media query for responsiveness */
+        @media (max-width: 768px) {
+          .tasker-container {
+            flex-direction: column;
+            align-items: center;
+          }
+      
+          .tasker-card {
+            width: 90%; /* Full width on smaller screens */
+          }
+        }
+      </style>
 </head>
 <body>
     <%- include('partials/header') %> <!-- Include the header partial -->
-    <a href="/tasker-schedule/:id">View Schedule </a>
-    Tasker Panel
+    <div class="tasker-container">
+        <% data.forEach(e => { %>
+        <div class="tasker-card">
+            <p><%= e.name %></p>
+            <p><%= e.work %></p>
+            <p><%= e.address %></p>
+            <p><%= e.zip %></p>
+            <p><%= e.state %></p>
+            <p class="contact">Phone: <%= e.phone %></p>
+            <p class="contact">Email: <%= e.email %></p>
+        </div>
+        <% }) %> 
 </body>
 </html>
