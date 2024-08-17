@@ -15,6 +15,15 @@ router.get('/plumber', (req, res) => {
 router.get('/painter', (req, res) => {
     res.render('bookingForms/booking-form');
 });
+router.get('/carpenter', (req, res) => {
+    res.render('bookingForms/booking-form');
+});
+router.get('/mason', (req, res) => {
+    res.render('bookingForms/booking-form');
+});
+router.get('/shifting', (req, res) => {
+    res.render('bookingForms/booking-form');
+});
 
 router.get('/show-bookings', async (req, res) => {
     const dbinstance = req.app.locals.db;

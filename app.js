@@ -7,6 +7,7 @@ const session = require('express-session');
 const path = require('path');
 const nodemailer = require('nodemailer');
 
+
 // Import routes
 const authRoutes = require('./routes/auth');
 const dashboardRoutes = require('./routes/dashboard');
