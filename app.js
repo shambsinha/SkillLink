@@ -97,11 +97,11 @@ app.get('/tasker-schedule/:id', (req, res) => {
 
 //booking
 app.get('/book-appointment/:id', (req, res) => {
-  //res.send('Booked');
   let id = req.params.id;
   console.log(id);
   res.render('bookingForms/book_appointment',{id:id})
 });
+
 app.post('/book-appointment', (req,res)=>{
   const { id, name, address, zip, state, phone,work } = req.body;
   console.log(req.body)
@@ -111,8 +111,9 @@ app.post('/book-appointment', (req,res)=>{
     console.log(e);
   })
 
-  res.send("Work Scheduled");
+  res.redirect('/dashboard');
 })
+
 // Handle booking form submission
 app.post('/submit-booking', async (req, res) => {
   try {
