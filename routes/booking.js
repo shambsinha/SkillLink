@@ -4,20 +4,20 @@ const path = require('path');
 
 
 
-router.get('/electrician', (req, res) => {
+router.get('/electrician', (req,res)=>{
     res.render('bookingForms/booking-form');
 });
 
-router.get('/plumber', (req, res) => {
+router.get('/plumber', (req,res)=>{
     res.render('bookingForms/booking-form');
 });
 
-router.get('/painter', (req, res) => {
+router.get('/painter', (req,res)=>{
     res.render('bookingForms/booking-form');
 });
 
 
-router.get('/', (req, res) => {
+router.get('/',(req,res)=>{
     res.send('dashboard');
 })
 
