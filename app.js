@@ -118,26 +118,9 @@ app.post('/book-appointment', (req,res)=>{
 app.post('/submit-booking', async (req, res) => {
   try {
     console.log(req.body)
-      const { name, address, zip, state, phone, workType } = req.body;
+      const { zip, workType } = req.body;
 
-
-      dbinstance.collection('bookingDetails').insertOne({
-        name,
-        workType,
-        address,
-        zip, 
-        state,
-        phone,
-        
-      }).then((e)=>{
-        //console.log(e);
-      }).catch((e)=>{
-        console.log(e);
-      })
-  
 dbinstance.collection('tasker').find({zip, workArea:workType}).toArray().then(data=>{
- 
- console.log(data);
  
   res.render('bookingForms/available_tasker',{data:data})
 
