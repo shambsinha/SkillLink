@@ -86,8 +86,8 @@
         <h2>Tasker Information Form</h2>
         <form action="/tasker/submit-tasker" method="POST">
             <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text"  id="username" name="username" required>
+                <label for="username">Name:</label>
+                <input type="text" value="<%= user.username %>"  id="username" name="username" readonly>
             </div>
 
             <div class="form-group">
@@ -113,7 +113,7 @@
 
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" value="<%= user.email %>" id="email" name="email" readonly>
             </div>
 
             <div class="form-group">
