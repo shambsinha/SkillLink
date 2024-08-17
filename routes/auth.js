@@ -174,8 +174,8 @@ router.post('/verify-otp', (req, res) => {
         role: 'customer'
       }).then(() => {
         db.collection('pending_users').deleteOne({ email });
-        req.session.user = { email: data.email };
-        res.redirect('/dashboard');
+        
+        res.redirect('/login');
       }).catch(dbErr => {
         console.error('Database error: ', dbErr);
         res.status(500).send('Database error');
