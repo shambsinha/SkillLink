@@ -55,6 +55,7 @@ router.post('/login', (req, res) => {
 });
 
 // Signup route
+// Signup route
 router.get('/signup', checkLoggedIn, (req, res) => {
   res.render('signup', { message: '' });
 });
@@ -62,39 +63,56 @@ router.get('/signup', checkLoggedIn, (req, res) => {
 router.post('/signup', (req, res) => {
   const { email, username, password } = req.body;
   const db = req.app.locals.db;
-  const transporter = req.app.locals.transporter;
 
-  db.collection('otps').deleteMany({ email }).then(() => {
-    const otp = generateOTP();
+  // Check if the user already exists in the customer collection
+  db.collection('customer').findOne({ email }).then(existingUser => {
+    if (existingUser) {
+      // User already exists, show an alert message
+      res.send(`
+        <script>
+          alert('User already exists');
+          window.location.href = '/signup';
+        </script>
+      `);
+    } else {
+      // If user doesn't exist, proceed with OTP generation and signup
+      db.collection('otps').deleteMany({ email }).then(() => {
+        const otp = generateOTP();
 
-    // Store user details temporarily
-    db.collection('pending_users').insertOne({ email, username, password, otp }).then(() => {
-      
-      // Send OTP email
-      const mailOptions = {
-        from: process.env.EMAIL_USER,
-        to: email,
-        subject: 'Your OTP Code',
-        text: `Your OTP code is ${otp}`
-      };
+        // Store user details temporarily
+        db.collection('pending_users').insertOne({ email, username, password, otp }).then(() => {
+          
+          // Send OTP email
+          const mailOptions = {
+            from: process.env.EMAIL_USER,
+            to: email,
+            subject: 'Your OTP Code',
+            text: `Your OTP code is ${otp}`
+          };
 
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          console.error('Error sending email: ', error);
-          return res.status(500).send('Error sending email');
-        }
-        res.redirect(`/verify-otp?email=${encodeURIComponent(email)}`);
+          transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+              console.error('Error sending email: ', error);
+              return res.status(500).send('Error sending email');
+            }
+            res.redirect(`/verify-otp?email=${encodeURIComponent(email)}`);
+          });
+
+        }).catch(dbErr => {
+          console.error('Database error: ', dbErr);
+          res.status(500).send('Database error');
+        });
+      }).catch(dbErr => {
+        console.error('Database error: ', dbErr);
+        res.status(500).send('Database error');
       });
-
-    }).catch(dbErr => {
-      console.error('Database error: ', dbErr);
-      res.status(500).send('Database error');
-    });
+    }
   }).catch(dbErr => {
     console.error('Database error: ', dbErr);
     res.status(500).send('Database error');
   });
 });
+
 
 // OTP verification route
 router.get('/verify-otp', (req, res) => {
