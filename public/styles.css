@@ -1,0 +1,81 @@
+/* Main Content Styles */
+main {
+     /* Adjusted for sidebar width */
+
+    padding: 30px;
+}
+
+#main-div {
+    transition: margin-left 0.3s ease; /* Adjust the duration and easing as needed */
+}
+
+main .container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+main section {
+    background-color: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+main section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+main section h2 {
+    margin-top: 0;
+    font-size: 22px;
+    color: #000000;
+}
+
+main section p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #495057;
+}
+
+/* Card Styles */
+.cards {
+    
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.card {
+    
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    flex: 1 1 calc(33% - 20px);
+    box-sizing: border-box;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card h3 {
+
+    margin-top: 0;
+    font-size: 20px;
+    color: #007bff;
+    text-align: center;
+}
+
+.card p {
+    text-align: center;
+    font-size: 14px;
+    color: #495057;
+}
+

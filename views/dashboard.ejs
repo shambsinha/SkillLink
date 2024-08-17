@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    
+    <%- include('partials/header') %> <!-- Include the header partial -->
+    
+    <main id="main-div">
+        <div class="container">
+            <section class="welcome">
+                <h2>Welcome, <%= user.username %></h2>
+                <p>Here you can manage your services, view bookings, update your profile, and more.</p>
+            </section>
+            <section class="services">
+                <h2>Services</h2>
+                <div class="cards">
+                    <a href="/booking/electrician">
+                        <div id="book-electrician" class="card">
+                            <img class="workimg" src="image/Electrician.jpg" alt="Electrical Service">
+                            <h3>Electrical</h3>
+                            <p>Description of service 1.</p>
+                        </div>
+                    </a>
+
+                    <a href="/booking/painter">
+                        <div class="card">
+                            <img class="workimg" src="image/painter.jpg" alt="Painting Service">
+                            <h3>Painting</h3>
+                            <p>Description of service 2.</p>
+                        </div>
+
+                    </a>
+                    
+                    <a href="/booking/plumber">
+                        <div class="card">
+                            <img class="workimg" src="image/plumber.jpg" alt="Plumbing Service">
+                            <h3>Plumbing</h3>
+                            <p>Description of service 3.</p>
+                        </div>
+                    </a>
+
+                    <a href="/booking/carpenter">
+                        <div class="card">
+                            <img class="workimg" src="image/carpenter.jpg" alt="Carpentry Service">
+                            <h3>Carpentry</h3>
+                            <p>Description of carpentry service.</p>
+                        </div>
+                    </a>
+            
+                    <a href="/booking/mason">
+                        <div class="card">
+                            <img class="workimg" src="image/mason.webp" alt="Masonry Service">
+                            <h3>Masonry</h3>
+                            <p>Description of masonry service.</p>
+                        </div>
+                    </a>
+            
+                    <a href="/booking/shifting">
+                        <div class="card">
+                            <img class="workimg" src="image/shifting.avif" alt="Shifting Service">
+                            <h3>Shifting</h3>
+                            <p>Description of shifting service.</p>
+                        </div>
+                    </a>
+            
+                    
+                </div>
+            </section>
+            <section class="bookings">
+                <h2>Bookings</h2>
+                <p>View and manage your bookings.</p>
+            </section>
+            <section class="profile">
+                <h2>Profile</h2>
+                <p>Update your personal information.</p>
+            </section>
+            <section class="settings">
+                <h2>Settings</h2>
+                <p>Configure your account settings.</p>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const mainDiv = document.getElementById("main-div");
+        
+        
+        toggleSidebar.addEventListener('click', function() {    
+        if(toggleSidebar.style.left=="15rem")
+            mainDiv.style.marginLeft="16.8rem";
+         else  mainDiv.style.marginLeft="0"; 
+    });
+
+
+        
+        </script>
+
+
+</body>
+</html>
