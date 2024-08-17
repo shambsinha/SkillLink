@@ -24,24 +24,24 @@ Router.post('/submit-tasker', async (req, res) => {
         const { username, workArea, address, phone, email, fees, zip } = req.body;
         const dbinstance = req.app.locals.db;
         
-        dbinstance.collection('tasker').insertOne({
-            username, 
-            workArea,
-            address, 
-            phone, 
-            email, 
-            fees, 
-            zip
-        }).then((e)=>{
-          console.log(e);
-        }).catch((e)=>{
-          console.log(e);
-        })
-        
         dbinstance.collection('customer').updateOne(
-          { email: req.session.user.email },  // Find the customer by email
-          { $set: { role: 'tasker' } }         // Update the role to 'tasker'
-      )
+          { email: req.session.user.email },  // Find the document by email
+          { 
+              $set: { 
+                  address,
+                  workArea,                 
+                  zip,                      
+                  role: 'tasker',          
+                  phone,
+                  fees
+              } 
+          }
+      ).then((e) => {
+          console.log('Document updated:', e);
+      }).catch((e) => {
+          console.log('Error updating document:', e);
+      });
+
       req.session.user.role = 'tasker';
         res.send(`
           <script>

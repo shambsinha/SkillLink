@@ -15,6 +15,7 @@ const bookingRoutes = require('./routes/booking');
 const taskerRoute = require('./routes/tasker');
 const profileRoute = require('./routes/profile');
 const taskerPanelRoute = require('./routes/tasker-panel');
+const { log } = require('console');
 // const { error } = require('console');
 
 // Middleware for serving static files
@@ -117,24 +118,32 @@ app.post('/book-appointment', (req,res)=>{
 // Handle booking form submission
 app.post('/submit-booking', async (req, res) => {
   try {
-    console.log(req.body)
-      const { zip, workType } = req.body;
+    // Extract the zip and workType from the request body
+    const { zip, workType } = req.body;
 
-dbinstance.collection('tasker').find({zip, workArea:workType}).toArray().then(data=>{
- 
-  res.render('bookingForms/available_tasker',{data:data})
+    // Perform the database query to find matching taskers
+    const data = await dbinstance.collection('customer').find({
+      zip: zip,
+      workArea: workType,
+      role: "tasker"
+    }).toArray();
 
-}).catch((e)=>{
-  console.log(e);
-})
+    // Log the retrieved data for debugging purposes
+    console.log(data);
+
+    // Render the available_tasker template with the retrieved data
+    res.render('bookingForms/available_tasker', { data: data });
+    
   } catch (error) {
-    res.status(500).send(error);
+    // Log and send the error if something goes wrong
+    console.error('Error during booking submission:', error);
+    res.status(500).send('An error occurred while submitting the booking.');
   }
 });
 
 
 
-//Appointmetns ka id should be = tasker ka _id for taskerpanel bookings show
+//Appointmetns ka id should be = tasker ka _id for taskerpanel bookings show  
 app.get('/show-bookings', async (req, res) => {
   try { 
     const userEmail = req.session.user.email;
