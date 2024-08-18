@@ -16,7 +16,7 @@ router.get('/:id', (req, res) => {
 
     const { id, name,email,work, address, zip, state, phone } = req.body;
     console.log(req.body)
-    dbinstance.collection('appointments').insertOne({id,name,email, work, address, zip, state, phone}).then(d=>{
+    dbinstance.collection('appointments').insertOne({id,name,email, work, address, zip, state, phone,status:"pending"}).then(d=>{
       console.log(d);
     }).catch(e=>{
       console.log(e);

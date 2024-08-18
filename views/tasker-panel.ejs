@@ -88,8 +88,17 @@
             <p><span class="item-label">State:</span> <%= e.state %></p>
             <p class="contact">Phone: <%= e.phone %></p>
             <p class="contact">Email: <%= e.email %></p>
-            <button>Approve</button>
+            <button id="approve-booking">Approve</button>
         </div>
         <% }) %> 
+
+        <script>
+          const approveBtn = document.getElementById("approve-booking");
+          
+          approveBtn.addEventListener("click",()=>{
+            
+          })
+          
+        </script>
 </body>
 </html>
