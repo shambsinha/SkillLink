@@ -6,6 +6,10 @@
     <title>Tasker Panel</title>
     <style>
         /* Container to hold all tasker cards */
+        .item-label{
+          color: red;
+          
+        }
         h2 {
             margin: 1rem auto;
             color:#555;
@@ -46,6 +50,7 @@
       
         /* Styling for text within the card */
         .tasker-card p {
+          height: 1.9rem;
           margin: 8px 0; /* Space between lines */
           font-size: 16px; /* Base font size */
           color: #333; /* Dark text color */
@@ -77,12 +82,13 @@
         <% data.forEach(e => { %>
         <div class="tasker-card">
             <p class="contact"><%= e.name %></p>
-            <p><%= e.work %></p>
-            <p><%= e.address %></p>
-            <p><%= e.zip %></p>
-            <p><%= e.state %></p>
+            <p><span class="item-label">Work:</span> <%= e.work %></p>
+            <p><span class="item-label">Address:</span> <%= e.address %></p>
+            <p><span class="item-label">Zip:</span> <%= e.zip %></p>
+            <p><span class="item-label">State:</span> <%= e.state %></p>
             <p class="contact">Phone: <%= e.phone %></p>
             <p class="contact">Email: <%= e.email %></p>
+            <button>Approve</button>
         </div>
         <% }) %> 
 </body>
