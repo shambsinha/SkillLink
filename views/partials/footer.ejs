@@ -1,0 +1,78 @@
+<!-- Add this inside your <body> tag, just above the closing </body> tag -->
+<footer>
+    <div class="container">
+        <div class="footer-left">
+            <p>&copy; 2024 Skill~Link. All rights reserved.</p>
+        </div>
+        <div class="footer-right">
+            <ul>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="/privacy">Privacy Policy</a></li>
+                <li><a href="/terms">Terms of Service</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
+<style>
+    /* Footer Styles */
+    footer {
+        background-color: #000000;
+        color: white;
+        padding: 20px 0;
+        position: relative;
+        bottom: 0;
+        width: 100%;
+        z-index: 1000;
+        border-top: 1px solid white;
+        text-align: center; /* Center text and links */
+    }
+
+    footer .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 40px;
+        flex-wrap: wrap;
+    }
+
+    footer p {
+        margin: 0;
+        font-size: 14px;
+    }
+
+    footer ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        gap: 15px;
+    }
+
+    footer ul li {
+        display: inline;
+    }
+
+    footer ul li a {
+        color: white;
+        text-decoration: none;
+        transition: color 0.3s ease;
+        font-size: 14px;
+    }
+
+    footer ul li a:hover {
+        color: #616060;
+    }
+
+    @media (max-width: 768px) {
+        footer .container {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        footer ul {
+            margin-top: 10px;
+        }
+    }
+</style>
