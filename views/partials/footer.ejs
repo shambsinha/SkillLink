@@ -1,78 +1,99 @@
-<!-- Add this inside your <body> tag, just above the closing </body> tag -->
-<footer>
-    <div class="container">
-        <div class="footer-left">
-            <p>&copy; 2024 Skill~Link. All rights reserved.</p>
+<footer style="background-color: #343a40; color: white; padding: 40px 0; margin-top: 50px; position: relative;">
+    <div class="container" style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap;">
+        <div class="footer-column" style="flex: 1; min-width: 200px; padding: 0 20px;">
+            <h4 style="font-size: 18px; margin-bottom: 20px;">About Us</h4>
+            <ul style="list-style: none; padding: 0;">
+                <li style="margin-bottom: 10px;"><a href="/about" style="color: white; text-decoration: none;">Our Story</a></li>
+                <li style="margin-bottom: 10px;"><a href="/team" style="color: white; text-decoration: none;">Team</a></li>
+                <li style="margin-bottom: 10px;"><a href="/careers" style="color: white; text-decoration: none;">Careers</a></li>
+                <li><a href="/blog" style="color: white; text-decoration: none;">Blog</a></li>
+            </ul>
         </div>
-        <div class="footer-right">
-            <ul>
-                <li><a href="/about">About Us</a></li>
-                <li><a href="/contact">Contact</a></li>
-                <li><a href="/privacy">Privacy Policy</a></li>
-                <li><a href="/terms">Terms of Service</a></li>
+        <div class="footer-column" style="flex: 1; min-width: 200px; padding: 0 20px;">
+            <h4 style="font-size: 18px; margin-bottom: 20px;">Support</h4>
+            <ul style="list-style: none; padding: 0;">
+                <li style="margin-bottom: 10px;"><a href="/help" style="color: white; text-decoration: none;">Help Center</a></li>
+                <li style="margin-bottom: 10px;"><a href="/contact" style="color: white; text-decoration: none;">Contact Us</a></li>
+                <li style="margin-bottom: 10px;"><a href="/faq" style="color: white; text-decoration: none;">FAQ</a></li>
+                <li><a href="/terms" style="color: white; text-decoration: none;">Terms & Conditions</a></li>
+            </ul>
+        </div>
+        <div class="footer-column" style="flex: 1; min-width: 200px; padding: 0 20px;">
+            <h4 style="font-size: 18px; margin-bottom: 20px;">Social Media</h4>
+            <ul style="list-style: none; padding: 0;">
+                <li style="margin-bottom: 10px;"><a href="https://facebook.com" target="_blank" style="color: white; text-decoration: none;">Facebook</a></li>
+                <li style="margin-bottom: 10px;"><a href="https://twitter.com" target="_blank" style="color: white; text-decoration: none;">Twitter</a></li>
+                <li style="margin-bottom: 10px;"><a href="https://instagram.com" target="_blank" style="color: white; text-decoration: none;">Instagram</a></li>
+                <li><a href="https://linkedin.com" target="_blank" style="color: white; text-decoration: none;">LinkedIn</a></li>
             </ul>
         </div>
     </div>
+    <div class="container" style="max-width: 1200px; margin: 20px auto 0; text-align: center;">
+        <p style="font-size: 14px; color: #aaa;">© 2024 Skill~Link. All rights reserved.</p>
+    </div>
+
+    <!-- Help Bot Button -->
+    <div id="help-bot" style="position: fixed; bottom: 30px; right: 30px; z-index: 1000;">
+        <button onclick="openHelpBot()" style="background-color: #000000; color: white; border: none; border-radius: 50%; padding: 15px; font-size: 18px; cursor: pointer; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);">
+            💬
+        </button>
+    </div>
+
+    <!-- Help Bot Modal -->
+    <div id="help-bot-modal" style="display: none; position: fixed; bottom: 100px; right: 30px; width: 300px; background-color: white; border-radius: 10px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2); z-index: 1001;">
+        <div style="background-color: #343a40; color: white; padding: 10px; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+            <span style="font-size: 16px;">Help Bot</span>
+            <button onclick="closeHelpBot()" style="float: right; background: none; border: none; color: white; font-size: 16px; cursor: pointer;">✖</button>
+        </div>
+        <div style="padding: 15px; max-height: 300px; overflow-y: auto;" id="chat-window">
+            <!-- Chat Messages Will Appear Here -->
+        </div>
+        <div style="padding: 15px; border-top: 1px solid #ccc;">
+            <input type="text" id="user-input" placeholder="Type your message..." style="width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #ccc; border-radius: 5px;" onkeydown="handleUserInput(event)">
+        </div>
+    </div>
+
+    <!-- Help Bot Script -->
+    <script>
+        const responses = {
+            "how to handle the website": "To handle the website, navigate through the dashboard where you can manage your profile, services, bookings, and more.",
+            "whom to contact": "You can contact our support team through the Contact Us page, or reach out to support@skilllink.com.",
+            "what is skill~link": "Skill~Link is a platform that connects skilled professionals with customers in need of their services.",
+            "how to become a tasker": "To become a Tasker, click on the 'Become a Tasker' link on the header or in the sidebar, and complete the registration process."
+        };
+
+        function openHelpBot() {
+            document.getElementById('help-bot-modal').style.display = 'block';
+        }
+
+        function closeHelpBot() {
+            document.getElementById('help-bot-modal').style.display = 'none';
+        }
+
+        function handleUserInput(event) {
+            if (event.key === 'Enter') {
+                const userInput = document.getElementById('user-input').value.toLowerCase().trim();
+                document.getElementById('user-input').value = '';
+                displayMessage(userInput, 'user');
+
+                setTimeout(() => {
+                    const response = responses[userInput] || "I'm sorry, I don't understand that question. Please try asking something else.";
+                    displayMessage(response, 'bot');
+                }, 500);
+            }
+        }
+
+        function displayMessage(message, sender) {
+            const chatWindow = document.getElementById('chat-window');
+            const messageElement = document.createElement('div');
+            messageElement.style.marginBottom = '10px';
+            messageElement.style.padding = '10px';
+            messageElement.style.borderRadius = '5px';
+            messageElement.style.backgroundColor = sender === 'user' ? '#d1e7ff' : '#f8f9fa';
+            messageElement.style.textAlign = sender === 'user' ? 'right' : 'left';
+            messageElement.innerText = message;
+            chatWindow.appendChild(messageElement);
+            chatWindow.scrollTop = chatWindow.scrollHeight; // Auto-scroll to the bottom
+        }
+    </script>
 </footer>
-
-<style>
-    /* Footer Styles */
-    footer {
-        background-color: #000000;
-        color: white;
-        padding: 20px 0;
-        position: relative;
-        bottom: 0;
-        width: 100%;
-        z-index: 1000;
-        border-top: 1px solid white;
-        text-align: center; /* Center text and links */
-    }
-
-    footer .container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 40px;
-        flex-wrap: wrap;
-    }
-
-    footer p {
-        margin: 0;
-        font-size: 14px;
-    }
-
-    footer ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        gap: 15px;
-    }
-
-    footer ul li {
-        display: inline;
-    }
-
-    footer ul li a {
-        color: white;
-        text-decoration: none;
-        transition: color 0.3s ease;
-        font-size: 14px;
-    }
-
-    footer ul li a:hover {
-        color: #616060;
-    }
-
-    @media (max-width: 768px) {
-        footer .container {
-            flex-direction: column;
-            align-items: center;
-        }
-
-        footer ul {
-            margin-top: 10px;
-        }
-    }
-</style>
