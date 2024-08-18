@@ -13,9 +13,11 @@ const authRoutes = require('./routes/auth');
 const dashboardRoutes = require('./routes/dashboard');
 const otpRoutes = require('./routes/otp');
 const bookingRoutes = require('./routes/booking');
+const bookAppointmentRoute = require('./routes/book-appointment');
 const taskerRoute = require('./routes/tasker');
 const profileRoute = require('./routes/profile');
 const taskerPanelRoute = require('./routes/tasker-panel');
+
 const { log } = require('console');
 // const { error } = require('console');
 
@@ -92,40 +94,10 @@ app.use('/booking', bookingRoutes);
 app.use('/tasker',taskerRoute);
 app.use('/profile',profileRoute);
 app.use('/tasker-panel',taskerPanelRoute);
+app.use('/book-appointment',bookAppointmentRoute);
 
 
 
-
-// //tasker schedule
-// app.get('/tasker-schedule/:id', (req, res) => {
-//   let id = req.params.id;
-//   dbinstance.collection('appointments').find({id}).toArray().then(data=>{
-//     console.log(data);
-//     res.render('tasker-schedule',{data})
-
-//   }).catch(e=>{
-//     console.log(e);
-//   })
-// });
-
-//booking
-app.get('/book-appointment/:id', (req, res) => {
-  let id = req.params.id;
-  console.log(id);
-  res.render('bookingForms/book_appointment',{id:id})
-});
-
-app.post('/book-appointment', (req,res)=>{
-  const { id, name,email,work, address, zip, state, phone } = req.body;
-  console.log(req.body)
-  dbinstance.collection('appointments').insertOne({id,name,email, work, address, zip, state, phone}).then(d=>{
-    console.log(d);
-  }).catch(e=>{
-    console.log(e);
-  })
-
-  res.redirect('/dashboard');
-})
 
 // Handle booking form submission
 app.post('/submit-booking', async (req, res) => {
