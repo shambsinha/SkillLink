@@ -1,5 +1,7 @@
 
 <head>
+    <link rel="icon" href="/image/logo.png" type="image/png">
+
     <style>
         a{
     text-decoration: none;
@@ -59,7 +61,7 @@ header .container {
 header h1 {
     color: white;
     margin: 0;
-    margin-left: 2rem;
+    margin-left: 0.5rem;
     font-size: 24px;
 }
 
@@ -247,13 +249,17 @@ a.button:hover {
 <body>
     <header>
         <div class="container">
+            
             <div id="toggle-sidebar">
                 <!-- Initially show a button to toggle the sidebar -->
                 <span>☰</span>
             </div>
-            <a href="/dashboard">
+            
+            <a style="display: flex; align-items: center;" href="/dashboard">
+                <img style="display: block; margin-left: 1rem;" class="logo" width="40px" src="/image/logo.png" alt="">
                 <h1>Skill~Link</h1>
             </a>
+            
             <nav>
                 <ul>
                     <li id="user-profile"><a href="/profile"><%= user ? user.username : 'Guest' %></a></li>

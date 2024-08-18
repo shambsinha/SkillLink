@@ -74,9 +74,9 @@
           }
         }
       </style>
+       <%- include('partials/header') %> <!-- Include the header partial -->
 </head>
 <body>
-    <%- include('partials/header') %> <!-- Include the header partial -->
    <h2>Tasks</h2>
     <div class="tasker-container">
         <% data.forEach(e => { %>
@@ -88,6 +88,7 @@
             <p><span class="item-label">State:</span> <%= e.state %></p>
             <p class="contact">Phone: <%= e.phone %></p>
             <p class="contact">Email: <%= e.email %></p>
+            <p><span class="item-label">Status: </span><%= e.status %></p>
             <button id="approve-booking">Approve</button>
         </div>
         <% }) %> 
