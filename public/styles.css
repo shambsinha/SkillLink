@@ -4,6 +4,13 @@ main {
 
     padding: 30px;
 }
+.title-name{
+    color: #007bff;
+}
+.title-desc{
+    color:#495057;
+    font-style: italic;
+}
 
 #main-div {
     transition: margin-left 0.3s ease; /* Adjust the duration and easing as needed */
