@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const crypto = require('crypto');
+const nodemailer = require('nodemailer');
 
 // Middleware to check if user is logged in
 function checkLoggedIn(req, res, next) {
@@ -15,6 +16,24 @@ function checkLoggedIn(req, res, next) {
 function generateOTP(length = 6) {
   return crypto.randomBytes(length).toString('hex').substring(0, length).toUpperCase();
 }
+
+// Configure the transporter
+const transporter = nodemailer.createTransport({
+  service: process.env.EMAIL_SERVICE, // Your email service provider
+  auth: {
+    user: process.env.EMAIL_USER, // Your email address (configured in your environment variables)
+    pass: process.env.EMAIL_PASS // Your email password (configured in your environment variables)
+  }
+});
+
+// Verify Nodemailer configuration
+transporter.verify((error, success) => {
+  if (error) {
+    console.error('Error configuring Nodemailer: ', error);
+  } else {
+    console.log('Nodemailer is ready to send emails');
+  }
+});
 
 // Root route ("/")
 router.get('/', (req, res) => {
@@ -31,14 +50,13 @@ router.get('/login', checkLoggedIn, (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-  const { email, password } = req.body;  // Use email instead of username
+  const { email, password } = req.body; // Use email instead of username
   const db = req.app.locals.db;
 
-  db.collection('customer').findOne({ email })  // Query the database with the email
+  db.collection('customer').findOne({ email }) // Query the database with the email
     .then(user => {
       if (user && user.pass === password) {
-        req.session.user = user;
-        res.redirect('/dashboard');
+        res.redirect('/login');
       } else {
         res.send(`
           <script>
@@ -62,39 +80,78 @@ router.get('/signup', checkLoggedIn, (req, res) => {
 router.post('/signup', (req, res) => {
   const { email, username, password } = req.body;
   const db = req.app.locals.db;
-  const transporter = req.app.locals.transporter;
 
-  db.collection('otps').deleteMany({ email }).then(() => {
-    const otp = generateOTP();
+  // Check if the user already exists in the customer collection
+  db.collection('customer').findOne({ email }).then(existingUser => {
+    if (existingUser) {
+      // User already exists, render the signup page with a message
+      res.render('signup', { message: 'User already exists. Please use a different email.' });
+    } else {
+      // If user doesn't exist, proceed with OTP generation and signup
+      // Check if the OTP already exists for the email
+      db.collection('pending_users').findOne({ email }).then(pendingUser => {
+        if (pendingUser) {
+          // Update existing OTP for the user
+          const otp = generateOTP();
+          db.collection('pending_users').updateOne(
+            { email },
+            { $set: { otp } }
+          ).then(() => {
+            // Send updated OTP email
+            const mailOptions = {
+              from: process.env.EMAIL_USER,
+              to: email,
+              subject: 'Your OTP Code',
+              text: `Your new OTP code is ${otp}`
+            };
 
-    // Store user details temporarily
-    db.collection('pending_users').insertOne({ email, username, password, otp }).then(() => {
-      
-      // Send OTP email
-      const mailOptions = {
-        from: process.env.EMAIL_USER,
-        to: email,
-        subject: 'Your OTP Code',
-        text: `Your OTP code is ${otp}`
-      };
+            transporter.sendMail(mailOptions, (error, info) => {
+              if (error) {
+                console.error('Error sending email: ', error);
+                return res.status(500).send('Error sending email');
+              }
+              res.redirect(`/verify-otp?email=${encodeURIComponent(email)}`);
+            });
+          }).catch(dbErr => {
+            console.error('Database error: ', dbErr);
+            res.status(500).send('Database error');
+          });
+        } else {
+          // Insert new entry with OTP if none exists
+          const otp = generateOTP();
 
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          console.error('Error sending email: ', error);
-          return res.status(500).send('Error sending email');
+          db.collection('pending_users').insertOne({ email, username, password, otp }).then(() => {
+            // Send OTP email
+            const mailOptions = {
+              from: process.env.EMAIL_USER,
+              to: email,
+              subject: 'Your OTP Code',
+              text: `Your OTP code is ${otp}`
+            };
+
+            transporter.sendMail(mailOptions, (error, info) => {
+              if (error) {
+                console.error('Error sending email: ', error);
+                return res.status(500).send('Error sending email');
+              }
+              res.redirect(`/verify-otp?email=${encodeURIComponent(email)}`);
+            });
+          }).catch(dbErr => {
+            console.error('Database error: ', dbErr);
+            res.status(500).send('Database error');
+          });
         }
-        res.redirect(`/verify-otp?email=${encodeURIComponent(email)}`);
+      }).catch(dbErr => {
+        console.error('Database error: ', dbErr);
+        res.status(500).send('Database error');
       });
-
-    }).catch(dbErr => {
-      console.error('Database error: ', dbErr);
-      res.status(500).send('Database error');
-    });
+    }
   }).catch(dbErr => {
     console.error('Database error: ', dbErr);
     res.status(500).send('Database error');
   });
 });
+
 
 // OTP verification route
 router.get('/verify-otp', (req, res) => {
@@ -116,8 +173,8 @@ router.post('/verify-otp', (req, res) => {
         role: 'customer'
       }).then(() => {
         db.collection('pending_users').deleteOne({ email });
-        req.session.user = { email: data.email };
-        res.redirect('/dashboard');
+        
+        res.redirect('/login');
       }).catch(dbErr => {
         console.error('Database error: ', dbErr);
         res.status(500).send('Database error');
