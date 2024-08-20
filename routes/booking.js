@@ -3,25 +3,44 @@ const router = express.Router();
 
 
 router.get('/electrician', (req, res) => {
+  if(!req.session.user){
+    res.send(`<script>alert('You have to login first!'); window.location.href='/login';</script>`);
+  }else
     res.render('bookingForms/booking-form');
 });
 
 router.get('/plumber', (req, res) => {
+  if(!req.session.user){
+    res.send(`<script>alert('You have to login first!'); window.location.href='/login';</script>`);
+  }else
     res.render('bookingForms/booking-form');
 });
 
 router.get('/painter', (req, res) => {
+  if(!req.session.user){
+    res.send(`<script>alert('You have to login first!'); window.location.href='/login';</script>`);
+  }else
     res.render('bookingForms/booking-form');
 });
 router.get('/carpenter', (req, res) => {
+  if(!req.session.user){
+    res.send(`<script>alert('You have to login first!'); window.location.href='/login';</script>`);
+  }else
     res.render('bookingForms/booking-form');
 });
 router.get('/mason', (req, res) => {
+  if(!req.session.user){
+    res.send(`<script>alert('You have to login first!'); window.location.href='/login';</script>`);
+  }else
     res.render('bookingForms/booking-form');
 });
 router.get('/shifting', (req, res) => {
+  if(!req.session.user){
+    res.send(`<script>alert('You have to login first!'); window.location.href='/login';</script>`);
+  }else
     res.render('bookingForms/booking-form');
 });
+
 
 router.get('/', async (req, res) => {
     const dbinstance = req.app.locals.db;
@@ -30,9 +49,6 @@ router.get('/', async (req, res) => {
     }else{
     try { 
       const userEmail = req.session.user.email;
-      // Ensure userEmail is valid
-      
-  
       // Fetch data from database
       const data = await dbinstance.collection('appointments').find({ email: userEmail }).toArray();
   
@@ -44,10 +60,6 @@ router.get('/', async (req, res) => {
     }
   }
   });
-
-// router.get('/', (req, res) => {
-//     res.render('bookingForms/show');
-// })
 
 
 // Handle booking form submission
@@ -78,6 +90,25 @@ router.post('/submit', async (req, res) => {
 });
 
 
+router.get('/book-appointment/:id', (req, res) => {
+  let id = req.params.id;
+  console.log(id);
+  res.render('bookingForms/book_appointment',{id:id})
+});
+
+router.post('/book-appointment', (req,res)=>{
+  const dbinstance = req.app.locals.db;
+
+  const { id, name,email,work, address, zip, state, phone } = req.body;
+  console.log(req.body)
+  dbinstance.collection('appointments').insertOne({id,name,email, work, address, zip, state, phone,status:"pending"}).then(d=>{
+    console.log(d);
+  }).catch(e=>{
+    console.log(e);
+  })
+
+  res.redirect('/dashboard');
+})
 
 
 
