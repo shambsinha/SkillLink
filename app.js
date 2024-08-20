@@ -15,7 +15,6 @@ const authRoutes = require('./routes/auth');
 const dashboardRoutes = require('./routes/dashboard');
 const otpRoutes = require('./routes/otp');
 const bookingRoutes = require('./routes/booking');
-const bookAppointmentRoute = require('./routes/book-appointment');
 const taskerRoute = require('./routes/tasker');
 const profileRoute = require('./routes/profile');
 const taskerPanelRoute = require('./routes/tasker-panel');
@@ -23,11 +22,7 @@ const taskerPanelRoute = require('./routes/tasker-panel');
 
 // Middleware for serving static files
 app.use(express.static('public'));
-app.use(express.static('routes'));
 app.use('/image', express.static('image'));
-
-
-let dbinstance;
 
 // Middleware for sessions
 app.use(session({
@@ -37,6 +32,8 @@ app.use(session({
   cookie: { secure: false } 
 }));
 
+
+let dbinstance;
 
 
 // Middleware to attach user to res.locals
@@ -75,6 +72,7 @@ transporter.verify((error, success) => {
   }
 });
 
+
 // Use routes
 app.use('/', authRoutes);
 app.use('/dashboard', dashboardRoutes);
@@ -83,19 +81,6 @@ app.use('/booking', bookingRoutes);
 app.use('/tasker',taskerRoute);
 app.use('/profile',profileRoute);
 app.use('/tasker-panel',taskerPanelRoute);
-app.use('/book-appointment',bookAppointmentRoute);
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
