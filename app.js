@@ -88,31 +88,7 @@ app.use('/book-appointment',bookAppointmentRoute);
 
 
 
-// Handle booking form submission
-app.post('/submit-booking', async (req, res) => {
-  try {
-    // Extract the zip and workType from the request body
-    const { zip, workType } = req.body;
 
-    // Perform the database query to find matching taskers
-    const data = await dbinstance.collection('customer').find({
-      zip: zip,
-      workArea: workType,
-      role: "tasker"
-    }).toArray();
-
-    // Log the retrieved data for debugging purposes
-    console.log(data);
-
-    // Render the available_tasker template with the retrieved data
-    res.render('bookingForms/available_tasker', { data: data });
-    
-  } catch (error) {
-    // Log and send the error if something goes wrong
-    console.error('Error during booking submission:', error);
-    res.status(500).send('An error occurred while submitting the booking.');
-  }
-});
 
 
 

@@ -1,7 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const path = require('path');
-
 
 
 router.get('/electrician', (req, res) => {
@@ -48,6 +46,34 @@ router.get('/show-bookings', async (req, res) => {
 router.get('/', (req, res) => {
     res.send('dashboard');
 })
+
+
+// Handle booking form submission
+router.post('/submit', async (req, res) => {
+  const dbinstance = req.app.locals.db;
+  try {
+    // Extract the zip and workType from the request body
+    const { zip, workType } = req.body;
+
+    // Perform the database query to find matching taskers
+    const data = await dbinstance.collection('customer').find({
+      zip: zip,
+      workArea: workType,
+      role: "tasker"
+    }).toArray();
+
+    // Log the retrieved data for debugging purposes
+    console.log(data);
+
+    // Render the available_tasker template with the retrieved data
+    res.render('bookingForms/available_tasker', { data: data });
+    
+  } catch (error) {
+    // Log and send the error if something goes wrong
+    console.error('Error during booking submission:', error);
+    res.status(500).send('An error occurred while submitting the booking.');
+  }
+});
 
 
 
