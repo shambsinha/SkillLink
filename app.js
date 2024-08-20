@@ -1,10 +1,12 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
+app.set('view engine', 'ejs');
+app.use(express.urlencoded({ extended: false }));
+
 const mongodb = require('mongodb');
 const client = mongodb.MongoClient;
 const session = require('express-session');
-const path = require('path');
 const nodemailer = require('nodemailer');
 
 
@@ -18,16 +20,12 @@ const taskerRoute = require('./routes/tasker');
 const profileRoute = require('./routes/profile');
 const taskerPanelRoute = require('./routes/tasker-panel');
 
-const { log } = require('console');
-// const { error } = require('console');
 
 // Middleware for serving static files
 app.use(express.static('public'));
 app.use(express.static('routes'));
 app.use('/image', express.static('image'));
 
-app.set('view engine', 'ejs');
-app.use(express.urlencoded({ extended: false }));
 
 let dbinstance;
 
@@ -38,15 +36,6 @@ app.use(session({
   saveUninitialized: true,
   cookie: { secure: false } 
 }));
-
-//Middleware for checking login
-function checkLoggedIn(req, res, next) {
-  if (req.session.user) {
-    res.redirect('/dashboard');
-  } else {
-    next();
-  }
-}
 
 
 
