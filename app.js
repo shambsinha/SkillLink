@@ -16,7 +16,6 @@ const dashboardRoutes = require('./routes/dashboard');
 const otpRoutes = require('./routes/otp');
 const bookingRoutes = require('./routes/booking');
 const taskerRoute = require('./routes/tasker');
-const profileRoute = require('./routes/profile');
 
 
 // Middleware for serving static files
@@ -52,24 +51,6 @@ client.connect(process.env.mongourl)
     console.log('MongoDB Connection Error: ', e);
   });
 
-// Configure Nodemailer
-const transporter = nodemailer.createTransport({
-  service: process.env.EMAIL_SERVICE,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  }
-});
-
-// Verify Nodemailer configuration
-transporter.verify((error, success) => {
-  if (error) {
-    console.log('Error configuring Nodemailer: ', error);
-  } else {
-    console.log('Nodemailer is ready to send emails');
-    app.locals.transporter = transporter; // Make transporter available in routes
-  }
-});
 
 
 // Use routes
@@ -78,7 +59,6 @@ app.use('/dashboard', dashboardRoutes);
 app.use('/otp', otpRoutes);
 app.use('/booking', bookingRoutes);
 app.use('/tasker',taskerRoute);
-app.use('/profile',profileRoute);
 
 
 

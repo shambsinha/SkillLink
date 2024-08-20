@@ -262,7 +262,7 @@ a.button:hover {
             
             <nav>
                 <ul>
-                    <li id="user-profile"><a href="/profile"><%= user ? user.username : 'Guest' %></a></li>
+                    <li id="user-profile"><a href="/dashboard/profile"><%= user ? user.username : 'Guest' %></a></li>
                     <li>
                         <a id="tasker-panel" href="<%= user && user.role === 'tasker' ? '/tasker/panel' : '/tasker' %>">
                             <%= user && user.role === 'tasker' ? 'Tasker Panel' : 'Become a Tasker' %>
@@ -290,7 +290,7 @@ a.button:hover {
                 <li><a href="/dashboard">Dashboard</a></li>
                 <li><a href="#">Services</a></li>
                 <li><a href="/booking/show-bookings">Bookings</a></li>
-                <li><a href="#">Profile</a></li>
+                <li><a href="/dashboard/profile">Profile</a></li>
                 <li><a href="#">Settings</a></li>
                 <li><a href="/logout">Logout</a></li>
     
