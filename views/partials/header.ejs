@@ -264,7 +264,7 @@ a.button:hover {
                 <ul>
                     <li id="user-profile"><a href="/profile"><%= user ? user.username : 'Guest' %></a></li>
                     <li>
-                        <a id="tasker-panel" href="<%= user && user.role === 'tasker' ? '/tasker-panel' : '/tasker' %>">
+                        <a id="tasker-panel" href="<%= user && user.role === 'tasker' ? '/tasker/panel' : '/tasker' %>">
                             <%= user && user.role === 'tasker' ? 'Tasker Panel' : 'Become a Tasker' %>
                         </a> 
                     </li>
