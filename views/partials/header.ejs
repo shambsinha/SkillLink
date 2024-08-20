@@ -160,6 +160,7 @@ aside nav ul li a:hover {
     cursor: pointer;
     z-index: 1000;
     transition: left 0.3s ease;
+
 }
 
 /* Show Sidebar */
@@ -177,7 +178,6 @@ a.button {
     cursor: pointer;
     text-decoration: none;
     font-size: 16px;
-    transition: background-color 0.3s ease;
 }
 
 button:hover,
@@ -185,61 +185,16 @@ a.button:hover {
     background-color: #333333;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    aside {
-        width: 200px;
+@media only screen and (max-width: 768px){
+    #navbar{
+        display: none;
     }
-
-    main {
-        margin-left: 220px;
-        padding: 20px;
+    #logo{
+        margin: 0 auto ;
     }
-
-    header .container {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    header nav ul {
-        flex-direction: column;
-        gap: 10px;
-    }
-}
-
-/* Additional Media Queries for Better Responsiveness */
-@media (max-width: 576px) {
-    aside {
+    aside{
         width: 100%;
-        height: auto;
-        position: relative;
-        top: 0;
-    }
-
-    main {
-        margin-left: 0;
-        padding: 10px;
-    }
-
-    header .container {
-        padding: 0 20px;
-    }
-
-    header nav ul {
-        flex-direction: column;
-        gap: 5px;
-    }
-
-    header nav ul li a {
-        padding: 8px 12px;
-    }
-
-    .cards {
-        flex-direction: column;
-    }
-
-    .card {
-        flex: 1 1 100%;
+        box-sizing: border-box;
     }
 }
 
@@ -255,13 +210,13 @@ a.button:hover {
                 <span>☰</span>
             </div>
             
-            <a style="display: flex; align-items: center;" href="/dashboard">
+            <a id="logo" style="display: flex; align-items: center;" href="/dashboard">
                 <img style="display: block; margin-left: 1rem;" class="logo" width="40px" src="/image/logo.png" alt="">
                 <h1>Skill~Link</h1>
             </a>
             
-            <nav>
-                <ul>
+            <nav id="navbar">
+                <ul class="nav-buttons">
                     <li id="user-profile"><a href="/dashboard/profile"><%= user ? user.username : 'Guest' %></a></li>
                     <li>
                         <a id="tasker-panel" href="<%= user && user.role === 'tasker' ? '/tasker/panel' : '/tasker' %>">
@@ -305,17 +260,18 @@ a.button:hover {
         
         
         toggleSidebar.addEventListener('click', function() {
-        // Toggle sidebar visibility
-    
+       // Toggle sidebar visibility
         sidebar.classList.toggle('hidden');
         if(toggleSidebar.innerText=='☰'){
             toggleSidebar.innerText='╳';
-            toggleSidebar.style.left="15rem";
         }
         else {toggleSidebar.innerText="☰";
-         toggleSidebar.style.left="10px";
         }
     });
+
+    document.getElementById('toggle-sidebar').addEventListener('click', function() {
+   
+});
         </script>
 </body>
 
