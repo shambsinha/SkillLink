@@ -23,14 +23,15 @@ router.get('/shifting', (req, res) => {
     res.render('bookingForms/booking-form');
 });
 
-router.get('/show-bookings', async (req, res) => {
+router.get('/', async (req, res) => {
     const dbinstance = req.app.locals.db;
+    if(!req.session.user){
+      res.send(`<script>alert('You have to login first!'); window.location.href='/login';</script>`);
+    }else{
     try { 
       const userEmail = req.session.user.email;
       // Ensure userEmail is valid
-      if (!userEmail) {
-        return res.status(400).send('User email not found in session');
-      }
+      
   
       // Fetch data from database
       const data = await dbinstance.collection('appointments').find({ email: userEmail }).toArray();
@@ -41,11 +42,12 @@ router.get('/show-bookings', async (req, res) => {
       console.error('Error fetching data:', e);
       res.status(500).send('Error fetching data');
     }
+  }
   });
 
-router.get('/', (req, res) => {
-    res.send('dashboard');
-})
+// router.get('/', (req, res) => {
+//     res.render('bookingForms/show');
+// })
 
 
 // Handle booking form submission
