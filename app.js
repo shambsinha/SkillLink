@@ -4,10 +4,10 @@ const app = express();
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: false }));
 
+
 const mongodb = require('mongodb');
 const client = mongodb.MongoClient;
 const session = require('express-session');
-const nodemailer = require('nodemailer');
 
 
 // Import routes
@@ -21,6 +21,7 @@ const taskerRoute = require('./routes/tasker');
 // Middleware for serving static files
 app.use(express.static('public'));
 app.use('/image', express.static('image'));
+
 
 // Middleware for sessions
 app.use(session({
@@ -40,6 +41,7 @@ app.use((req, res, next) => {
   next();
 });
 
+
 // Connect to MongoDB
 client.connect(process.env.mongourl)
   .then((database) => {
@@ -52,14 +54,12 @@ client.connect(process.env.mongourl)
   });
 
 
-
 // Use routes
 app.use('/', authRoutes);
 app.use('/dashboard', dashboardRoutes);
 app.use('/otp', otpRoutes);
 app.use('/booking', bookingRoutes);
 app.use('/tasker',taskerRoute);
-
 
 
 // Start the server
