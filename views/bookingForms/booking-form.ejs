@@ -1,9 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking Form</title>
     <style>
         .main-container{
          margin: 2rem auto;
@@ -70,7 +65,7 @@
     
     <div class="main-container">
         <h2 id="search-title"> </h2>
-        <form action="/submit-booking" method="POST" class="booking-form">
+        <form action="/booking/submit" method="POST" class="booking-form">
 
             <div class="form-group">
                 <label for="zip">Zip Code:</label>
@@ -83,9 +78,12 @@
                 <select id="workType" name="workType" required>
                     <option value="">--Please choose an option--</option>
                     <option value="Electrician">Electrician</option>
+                    <option value="Painter">Painter</option>
                     <option value="Plumber">Plumber</option>
                     <option value="Carpenter">Carpenter</option>
-                    <option value="Painter">Painter</option>
+                    <option value="Mason">Mason</option>
+                    <option value="Shifter">Shifter</option>
+                    
                 </select>
             </div>
 
@@ -108,7 +106,12 @@
             workTypeSelect.value = 'Carpenter';
         } else if (urlPath.includes('painter')) {
             workTypeSelect.value = 'Painter';
+        }else if (urlPath.includes('shifting')) {
+            workTypeSelect.value = 'Shifter';
+        }else if (urlPath.includes('mason')) {
+            workTypeSelect.value = 'Mason';
         }
+        
 
 // Function to update the search title text
 function updateSearchTitle() {

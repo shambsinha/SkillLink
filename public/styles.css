@@ -4,6 +4,13 @@ main {
 
     padding: 30px;
 }
+.title-name{
+    color: #007bff;
+}
+.title-desc{
+    color:#495057;
+    font-style: italic;
+}
 
 #main-div {
     transition: margin-left 0.3s ease; /* Adjust the duration and easing as needed */
@@ -58,6 +65,7 @@ main section p {
     flex-direction: column;
     align-items: center;
     width: 16rem;
+    height: 18rem;
     margin: 0.5rem 0.5rem;
     background-color: #ffffff;
     border: 1px solid #e0e0e0;
@@ -73,9 +81,10 @@ main section p {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-.card h3 {
+.card-head {
 
     margin-top: 0;
+    margin-bottom: 0;
     font-size: 20px;
     color: #007bff;
     text-align: center;

@@ -36,12 +36,8 @@ transporter.verify((error, success) => {
 });
 
 // Root route ("/")
-router.get('/', (req, res) => {
-  if (req.session.user) {
-    res.redirect('/dashboard');
-  } else {
+router.get('/', checkLoggedIn, (req, res) => {
     res.redirect('/login');
-  }
 });
 
 // Login route
@@ -50,13 +46,14 @@ router.get('/login', checkLoggedIn, (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-  const { email, password } = req.body; // Use email instead of username
+  const { email, password } = req.body;
   const db = req.app.locals.db;
 
   db.collection('customer').findOne({ email }) // Query the database with the email
     .then(user => {
       if (user && user.pass === password) {
-        res.redirect('/login');
+        req.session.user = user;
+        res.redirect('/dashboard');
       } else {
         res.send(`
           <script>

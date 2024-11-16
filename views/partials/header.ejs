@@ -1,5 +1,7 @@
 
 <head>
+    <link rel="icon" href="/image/logo.png" type="image/png">
+
     <style>
         a{
     text-decoration: none;
@@ -59,7 +61,7 @@ header .container {
 header h1 {
     color: white;
     margin: 0;
-    margin-left: 2rem;
+    margin-left: 0.5rem;
     font-size: 24px;
 }
 
@@ -105,6 +107,7 @@ body {
 
 /* Sidebar Styles */
 aside {
+    z-index: 1;
     width: 250px;
     background-color: #343a40;
     color: white;
@@ -158,6 +161,7 @@ aside nav ul li a:hover {
     cursor: pointer;
     z-index: 1000;
     transition: left 0.3s ease;
+
 }
 
 /* Show Sidebar */
@@ -175,7 +179,6 @@ a.button {
     cursor: pointer;
     text-decoration: none;
     font-size: 16px;
-    transition: background-color 0.3s ease;
 }
 
 button:hover,
@@ -183,61 +186,16 @@ a.button:hover {
     background-color: #333333;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    aside {
-        width: 200px;
+@media only screen and (max-width: 768px){
+    #navbar{
+        display: none;
     }
-
-    main {
-        margin-left: 220px;
-        padding: 20px;
+    #logo{
+        margin: 0 auto ;
     }
-
-    header .container {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    header nav ul {
-        flex-direction: column;
-        gap: 10px;
-    }
-}
-
-/* Additional Media Queries for Better Responsiveness */
-@media (max-width: 576px) {
-    aside {
+    aside{
         width: 100%;
-        height: auto;
-        position: relative;
-        top: 0;
-    }
-
-    main {
-        margin-left: 0;
-        padding: 10px;
-    }
-
-    header .container {
-        padding: 0 20px;
-    }
-
-    header nav ul {
-        flex-direction: column;
-        gap: 5px;
-    }
-
-    header nav ul li a {
-        padding: 8px 12px;
-    }
-
-    .cards {
-        flex-direction: column;
-    }
-
-    .card {
-        flex: 1 1 100%;
+        box-sizing: border-box;
     }
 }
 
@@ -247,21 +205,26 @@ a.button:hover {
 <body>
     <header>
         <div class="container">
+            
             <div id="toggle-sidebar">
                 <!-- Initially show a button to toggle the sidebar -->
                 <span>☰</span>
             </div>
-            <a href="/dashboard">
+            
+            <a id="logo" style="display: flex; align-items: center;" href="/dashboard">
+                <img style="display: block; margin-left: 1rem;" class="logo" width="40px" src="/image/logo.png" alt="">
                 <h1>Skill~Link</h1>
             </a>
-            <nav>
-                <ul>
-                    <li id="user-profile"><a href="/profile"><%= user ? user.username : 'Guest' %></a></li>
+            
+            <nav id="navbar">
+                <ul class="nav-buttons">
+                    <li id="user-profile"><a href="/dashboard/profile"><%= user ? user.username : 'Guest' %></a></li>
                     <li>
-                        <a id="tasker-panel" href="<%= user && user.role === 'tasker' ? '/tasker-panel' : '/tasker' %>">
+                        <a id="tasker-panel" href="<%= user && user.role === 'tasker' ? '/tasker/panel' : '/tasker' %>">
                             <%= user && user.role === 'tasker' ? 'Tasker Panel' : 'Become a Tasker' %>
                         </a> 
                     </li>
+                    <li> <a href="/booking">Bookings</a></li>
                     <li>
                         <% if (user) { %>
                           <!-- If the user is logged in, show the Logout option -->
@@ -282,8 +245,8 @@ a.button:hover {
             <ul>
                 <li><a href="/dashboard">Dashboard</a></li>
                 <li><a href="#">Services</a></li>
-                <li><a href="#">Bookings</a></li>
-                <li><a href="#">Profile</a></li>
+                <li><a href="/booking/show-bookings">Bookings</a></li>
+                <li><a href="/dashboard/profile">Profile</a></li>
                 <li><a href="#">Settings</a></li>
                 <li><a href="/logout">Logout</a></li>
     
@@ -298,17 +261,18 @@ a.button:hover {
         
         
         toggleSidebar.addEventListener('click', function() {
-        // Toggle sidebar visibility
-    
+       // Toggle sidebar visibility
         sidebar.classList.toggle('hidden');
         if(toggleSidebar.innerText=='☰'){
             toggleSidebar.innerText='╳';
-            toggleSidebar.style.left="15rem";
         }
         else {toggleSidebar.innerText="☰";
-         toggleSidebar.style.left="10px";
         }
     });
+
+    document.getElementById('toggle-sidebar').addEventListener('click', function() {
+   
+});
         </script>
 </body>
 

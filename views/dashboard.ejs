@@ -5,16 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="styles.css">
+    
+    <%- include('partials/header') %> <!-- Include the header partial -->
 </head>
 <body>
     
-    <%- include('partials/header') %> <!-- Include the header partial -->
+   
     
     <main id="main-div">
         <div class="container">
             <section class="welcome">
-                <h2>Welcome, <%= user.username %></h2>
-                <p>Here you can manage your services, view bookings, update your profile, and more.</p>
+                <h2>Welcome,<span class="title-name"> <%= user.username %> </span> </h2>
+                <p class="title-desc">“Book professional home services including electricians, plumbers, and repair specialists at your doorstep.”</p>
             </section>
             <section class="services">
                 <h2>Services</h2>
@@ -22,16 +24,16 @@
                     <a href="/booking/electrician">
                         <div id="book-electrician" class="card">
                             <img class="workimg" src="image/Electrician.jpg" alt="Electrical Service">
-                            <h3>Electrical</h3>
-                            <p>Description of service 1.</p>
+                            <h3 class="card-head">Electrical</h3>
+                            <p>“Expert electrical services including wiring, repairs, installations, and maintenance for homes and businesses.”</p>
                         </div>
                     </a>
 
                     <a href="/booking/painter">
                         <div class="card">
-                            <img class="workimg" src="image/painter.jpg" alt="Painting Service">
-                            <h3>Painting</h3>
-                            <p>Description of service 2.</p>
+                            <img class="workimg" src="image/painter.png" alt="Painting Service">
+                            <h3 class="card-head">Painting</h3>
+                            <p>“Professional painting services for homes and businesses, including interior, exterior, touch-ups, and full renovations.”</p>
                         </div>
 
                     </a>
@@ -39,42 +41,44 @@
                     <a href="/booking/plumber">
                         <div class="card">
                             <img class="workimg" src="image/plumber.jpg" alt="Plumbing Service">
-                            <h3>Plumbing</h3>
-                            <p>Description of service 3.</p>
+                            <h3 class="card-head">Plumbing</h3>
+                            <p>“Trusted plumbing services for homes and businesses, covering repairs, installations, leak detection, and maintenance.”</p>
                         </div>
                     </a>
 
                     <a href="/booking/carpenter">
                         <div class="card">
                             <img class="workimg" src="image/carpenter.jpg" alt="Carpentry Service">
-                            <h3>Carpentry</h3>
-                            <p>Description of carpentry service.</p>
+                            <h3 class="card-head">Carpentry</h3>
+                            <p>“Expert carpentry services for custom furniture, repairs, installations, and home improvements.”</p>
                         </div>
                     </a>
             
                     <a href="/booking/mason">
                         <div class="card">
                             <img class="workimg" src="image/mason.webp" alt="Masonry Service">
-                            <h3>Masonry</h3>
-                            <p>Description of masonry service.</p>
+                            <h3 class="card-head">Masonry</h3>
+                            <p>“Skilled masonry services for homes and businesses, including brickwork, stonework, repairs, and construction.”</p>
                         </div>
                     </a>
             
                     <a href="/booking/shifting">
                         <div class="card">
                             <img class="workimg" src="image/shifting.avif" alt="Shifting Service">
-                            <h3>Shifting</h3>
-                            <p>Description of shifting service.</p>
+                            <h3 class="card-head">Shifting</h3>
+                            <p>“Reliable shifting services for homes and businesses, including packing, moving, and unpacking with care.”</p>
                         </div>
                     </a>
             
                     
                 </div>
             </section>
-            <section class="bookings">
-                <h2>Bookings</h2>
-                <p>View and manage your bookings.</p>
-            </section>
+            <a href="/booking">
+                <section class="bookings">
+                    <h2>Bookings</h2>
+                    <p>View and manage your bookings.</p>
+                </section>
+            </a>
             <section class="profile">
                 <h2>Profile</h2>
                 <p>Update your personal information.</p>
@@ -86,14 +90,18 @@
         </div>
     </main>
 
+    <%- include('partials/footer') %> <!-- Include the footer partial -->
+
     <script>
         const mainDiv = document.getElementById("main-div");
         
         
-        toggleSidebar.addEventListener('click', function() {    
-        if(toggleSidebar.style.left=="15rem")
-            mainDiv.style.marginLeft="16.8rem";
-         else  mainDiv.style.marginLeft="0"; 
+        toggleSidebar.addEventListener('click', function() {     
+         if(toggleSidebar.innerText=='☰'){
+            mainDiv.style.marginLeft="0"; 
+        }
+        else {mainDiv.style.marginLeft="16.8rem";
+        }
     });
 
 
